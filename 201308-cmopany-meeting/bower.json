@@ -1,0 +1,14 @@
+{
+  "name": "201308-cmopany-meeting",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reveal.js": "~2.4.0"
+  }
+}

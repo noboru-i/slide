@@ -47,6 +47,7 @@
 				<!-- vagrant -->
 				<section>
 					<h3>簡単に捨てられる環境が欲しい</h3>
+					<small>新しいバージョンを試したくても、Macの環境壊したくないですよね・・・</small>
 				</section>
 				<section>
 					<h2>Vagrant</h2>
@@ -59,7 +60,9 @@
 $ vagrant box add base http://files.vagrantup.com/lucid32.box
 $ vagrant init
 $ vagrant up
+$ vagrant ssh
 					</code></pre>
+					<p>これだけで、まっさらなUbuntu環境が使える</p>
 				</section>
 				<section>
 					<h2>いらなくなったら</h2>
@@ -72,7 +75,7 @@ $ vagrant destroy
 				<section>
 					<h3>開発・動作環境を<br>
 					チーム全員で揃えたい</h3>
-					<small>手順書とか、作るの面倒ですよね・・・</small>
+					<small>けど、手順書とか、作るの面倒ですよね・・・</small>
 				</section>
 				<section>
 					<h2>Chef</h2>
@@ -103,6 +106,7 @@ $ vagrant destroy
 				<!-- CocoaPods -->
 				<section>
 					<h3>iOSのライブラリを管理したい</h3>
+					<small>1回入れるのはいいですけど、bugfixされても、バージョンアップがめんどうですよね・・・</small>
 				</section>
 				<section>
 					<h2>CocoaPods</h2>
@@ -110,19 +114,21 @@ $ vagrant destroy
 					<p><a href="http://cocoapods.org/">http://cocoapods.org/</a></p>
 				</section>
 				<section>
-					<p>JSONKitは1.4以降、Reachabilityは3.0.0以降を使いたい</p>
+					<p>JSONKitは1.4以降、Reachabilityは3.0系の最新を使いたい</p>
 					<pre><code data-trim class="bash">
 $ vim Podfile
-  platform :ios
+  platform :ios, '5.0'
   pod 'JSONKit',      '~> 1.4'
   pod 'Reachability', '~> 3.0.0'
 $ pod install
 					</code></pre>
+					<p>バージョン指定、gitのcommit指定など、いろいろできる</p>
 				</section>
 
 				<!-- Gradle -->
 				<section>
 					<h3>Androidのビルドを簡単にやりたい</h3>
+					<small>「広告なしの課金版」と「無料版」の両方更新とかめんどうですよね・・・</small>
 				</section>
 				<section>
 					<h2>Gradle</h2>
@@ -131,11 +137,13 @@ $ pod install
 				</section>
 				<section>
 					<h2>Build Type</h2>
-					<p>本番用と開発用で設定が別々</p>
+					<p>本番用と開発用で設定が別々のとき</p>
+					<small>開発時は開発用サーバに接続するとか。</small>
 				</section>
 				<section>
 					<h2>Product flavors</h2>
-					<p>無料版と課金版で機能が変わる</p>
+					<p>無料版と課金版で機能が変わるとき</p>
+					<small>金を払ってもらった人には、広告を出さないとか。</small>
 				</section>
 				<section>
 					<h2>ライブラリの管理</h2>
@@ -145,6 +153,7 @@ $ pod install
 				<!-- Sass -->
 				<section>
 					<h3>CSSを綺麗に書きたい</h3>
+					<small>CSSって、場当たり的に書いてると大変なことになりますよね・・・</small>
 				</section>
 				<section>
 					<h2>Sass</h2>
@@ -157,6 +166,7 @@ $ pod install
 						<li>変数の定義</li>
 						<li>セレクタのネスト</li>
 						<li>継承</li>
+						<li>などなど。。。</li>
 					</ul>
 				</section>
 				<section>
@@ -182,6 +192,154 @@ table.hl td.ln {
 					<small>SCSS(Sassy CSS)という記法です。SASS記法もあります。</small>
 				</section>
 
+				<!-- Compass -->
+				<section>
+					<h3>CSSがいろいろめんどくさい</h3>
+					<small>ベンダープレフィックスとか、CSS Spriteとか・・・</small>
+				</section>
+				<section>
+					<h2>Compass</h2>
+					<p><img src="image/logo_compass.png"/></p>
+					<p><a href="http://compass-style.org/">http://compass-style.org/</a></p>
+				</section>
+				<section>
+					<h2>ベンダープレフィックス</h2>
+					<pre><code class="sass">
+.simple  {
+  @include border-radius(4px, 4px);
+}
+					</code></pre>
+					と書いておけば、
+					<pre><code class="css">
+.simple {
+  -webkit-border-radius: 4px 4px;
+  -moz-border-radius: 4px / 4px;
+  -khtml-border-radius: 4px / 4px;
+  border-radius: 4px / 4px; 
+}
+					</code></pre>
+					<p>になる</p>
+					<p><small>1コつけ忘れて、古いFirefoxで見た時だけ崩れる、とかがなくなる。はず。</small></p>
+				</section>
+				<section>
+					<h2>CSS Sprite</h2>
+					<ul>
+						<li>images/my-icons/new.png</li>
+						<li>images/my-icons/edit.png</li>
+						<li>images/my-icons/save.png</li>
+						<li>images/my-icons/delete.png</li>
+					</ul>
+					<p>として、32pxの画像を4つ置き、</p>
+					<pre><code class="sass">
+@import "my-icons/*.png";
+@include all-my-icons-sprites;
+					</code></pre>
+					<p>と書くと、</p>
+					<pre><code class="css">
+.my-icons-sprite, .my-icons-delete, .my-icons-edit, .my-icons-new,
+.my-icons-save { background: url('/images/my-icons-s34fe0604ab.png') no-repeat; }
+
+.my-icons-delete { background-position: 0 0; }
+.my-icons-edit { background-position: 0 -32px; }
+.my-icons-new { background-position: 0 -64px; }
+.my-icons-save { background-position: 0 -96px; }
+					</code></pre>
+					<p>となる</p>
+					<p><small>sprite画像作っけど、内1個使わなくてよかったー → フォルダから削除</small></p>
+				</section>
+
+				<!-- Grunt -->
+				<section>
+					<h3>JavaScript, CSSの管理がめんどう</h3>
+					<p>concat（連結）して、minify（圧縮）して・・・</p>
+				</section>
+				<section>
+					<h2>Grunt</h2>
+					<p><img src="image/logo_grunt.png" alt="" /></p>
+					<p><a href="http://gruntjs.com/">http://gruntjs.com/</a></p>
+				</section>
+				<section>
+					<p>concat（連結）</p>
+					<p>Gruntfile.js に下記を記載</p>
+					<pre><code class="js">
+grunt.initConfig({
+  concat: {
+    options: {
+      separator: ';',
+    },
+    dist: {
+      src: ['src/intro.js', 'src/project.js', 'src/outro.js'],
+      dest: 'dist/built.js',
+    },
+  },
+});
+					</code></pre>
+					<p>で</p>
+					<pre><code class="shell">
+$ grunt concat:dist
+					</code></pre>
+					<p>と実行すると3つのファイルが結合されてbuilt.jsが出来ます</p>
+				</section>
+				<section>
+					<p>minify（圧縮）</p>
+					<p>Gruntfile.js に下記を記載</p>
+					<pre><code class="js">
+grunt.initConfig({
+  uglify: {
+    my_target: {
+      files: {
+        'dist/built.min.js': ['dist/built.js']
+      }
+    }
+  }
+});
+					</code></pre>
+					<p>で</p>
+					<pre><code class="shell">
+$ grunt uglify:my_target
+					</code></pre>
+					<p>と実行すると、built.jsを圧縮したbuilt.min.jsが出来ます</p>
+				</section>
+				<section>
+					<p>2つを合わせて、grunt.initConfigに下記を追加</p>
+					<pre><code class="js">
+grunt.registerTask('default', ['concat', 'uglify']);
+					</code></pre>
+					<p>で</p>
+					<pre><code class="shell">
+$ grunt
+					</code></pre>
+					<p>とすると、concatしてminifyされたjsファイルが出来ます</p>
+				</section>
+				<section>
+					<p>紹介した、concat、uglify以外にも</p>
+					<ul>
+						<li>grunt-contrib-compass</li>
+						<li>grunt-contrib-watch</li>
+						<li>grunt-contrib-jshint</li>
+						<li>grunt-contrib-coffee</li>
+						<li>grunt-contrib-imagemin</li>
+						<li>などなど。。。</li>
+					</ul>
+				</section>
+				<section>
+					<h3>JavaScript, CSSライブラリの管理がめんどう</h3>
+					<p>jQueryのbugfixがリリースされたらしいけど、<br>
+						取り込むのめんどい・・・</p>
+				</section>
+				<section>
+					<h2>Bower</h2>
+					<p><img src="image/logo_bower.png" alt="" /></p>
+					<p><a href="http://bower.io/">http://bower.io/</a></p>
+				</section>
+				<section>
+				</section>
+				<section>
+				</section>
+				<section>
+				</section>
+				<section>
+				</section>
 				<section>
 				</section>
 				<section>
@@ -192,17 +350,8 @@ table.hl td.ln {
 				</section>
 				<section>
 				</section>
-
-
-
-
-
-
-
-
-
-
-
+				<section>
+				</section>
 
 
 

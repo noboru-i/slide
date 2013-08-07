@@ -329,10 +329,24 @@ $ grunt
 				</section>
 				<section>
 					<h2>Bower</h2>
-					<p><img src="image/logo_bower.png" alt="" /></p>
+					<p><img src="image/logo_bower.png" width="40%" /></p>
 					<p><a href="http://bower.io/">http://bower.io/</a></p>
 				</section>
 				<section>
+					<p>Backbone.js, jQueryの最新版を利用したい場合</p>
+					<pre><code class="shell">
+$ vim bower.json
+{
+  略
+  "dependencies": {
+    "underscore": "latest",
+    "backbone": "latest",
+    "jquery": "latest"
+  },
+}
+$ bower install
+					</code></pre>
+					<p>これで、bower_components フォルダに<br>各ライブラリとその依存関係が配置される</p>
 				</section>
 				<section>
 				</section>

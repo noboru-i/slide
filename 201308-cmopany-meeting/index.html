@@ -44,10 +44,21 @@
 					</p>
 				</section>
 
+				<!-- はじめに -->
+				<section>
+					<p>世の中には、便利なツールがいろいろあります</p>
+				</section>
+				<section>
+					<p>今回、10個程度のツールを矢継ぎ早に紹介します</p>
+				</section>
+				<section>
+				<p>1つでも、<br>調べてみよう、使ってみよう<br>と思っていただければ幸いです</p>
+				</section>
+
 				<!-- vagrant -->
 				<section>
 					<h3>簡単に捨てられる環境が欲しい</h3>
-					<small>新しいバージョンを試したくても、Macの環境壊したくないですよね・・・</small>
+					<small>新しいバージョンのソフトを試したくても、Macの環境壊したくないですよね・・・</small>
 				</section>
 				<section>
 					<h2>Vagrant</h2>
@@ -96,6 +107,7 @@ $ vagrant destroy
 					<p>Berkshelfも利用すると、<br>
 					誰かが検証済みの構成を持ってこれる</p>
 					<p><a href="http://berkshelf.com/">http://berkshelf.com/</a></p>
+					<small>前提条件があったりして、使えないこともありますが。。。</small>
 				</section>
 				<section>
 					<p>1回作っておけば、<br>
@@ -122,7 +134,13 @@ $ vim Podfile
   pod 'Reachability', '~> 3.0.0'
 $ pod install
 					</code></pre>
-					<p>バージョン指定、gitのcommit指定など、いろいろできる</p>
+				</section>
+				<section>
+					<ul>
+						<li>バージョン指定</li>
+						<li>gitのcommit指定</li>
+					</ul>
+					<p>など、いろいろできる</p>
 				</section>
 
 				<!-- Gradle -->
@@ -235,6 +253,8 @@ table.hl td.ln {
 @include all-my-icons-sprites;
 					</code></pre>
 					<p>と書くと、</p>
+				</section>
+				<section>
 					<pre><code class="css">
 .my-icons-sprite, .my-icons-delete, .my-icons-edit, .my-icons-new,
 .my-icons-save { background: url('/images/my-icons-s34fe0604ab.png') no-repeat; }
@@ -319,8 +339,8 @@ $ grunt
 						<li>grunt-contrib-jshint</li>
 						<li>grunt-contrib-coffee</li>
 						<li>grunt-contrib-imagemin</li>
-						<li>などなど。。。</li>
 					</ul>
+					<p>などなど</p>
 				</section>
 				<section>
 					<h3>JavaScript, CSSライブラリの管理がめんどう</h3>
@@ -348,27 +368,61 @@ $ bower install
 					</code></pre>
 					<p>これで、bower_components フォルダに<br>各ライブラリとその依存関係が配置される</p>
 				</section>
+
+				<!-- Capistrano -->
 				<section>
+					<h3>デプロイを自動化したい</h3>
+					<p>FTPで転送して、<br>sshでログインして、<br>解凍して、、、<br>とか、めんどい・・・</p>
 				</section>
 				<section>
+					<h2>capistrano</h2>
+					<p><img src="image/logo_capistrano.png" alt="" /></p>
+					<p><a href="http://www.capistranorb.com/">http://www.capistranorb.com/</a></p>
 				</section>
 				<section>
+					<h2>Fabric</h2>
+					<p><a href="http://fabfile.org/">http://fabfile.org/</a></p>
 				</section>
 				<section>
-				</section>
-				<section>
-				</section>
-				<section>
-				</section>
-				<section>
-				</section>
-				<section>
-				</section>
-				<section>
+					<p>詳しくは、よく知らないので、<br>
+					むしろ教えて下さい m(__)m</p>
 				</section>
 
+				<!-- Jenkins -->
+				<section>
+					<h3>デプロイまでの工程がめんどう</h3>
+					<p>commitしてから、静的解析して、単体テスト流して、結合テスト流して、デプロイして・・・</p>
+				</section>
+				<section>
+					<h2>Jenkins</h2>
+					<p><img src="image/logo_jenkins.png" alt="" /></p>
+					<p><a href="http://jenkins-ci.org/">http://jenkins-ci.org/</a></p>
+				</section>
+				<section>
+					<h2>GitのPUSHをトリガにする</h2>
+					<p>Gitの変更を監視する or GitHub/GitLabから通知する</p>
+				</section>
+				<section>
+					<h2>ビルド・パイプライン</h2>
+					<p>プロセスを分割して登録しておけば、<br>
+					それぞれのプロセスが成功した場合に、<br>
+					次のプロセスが実行される</p>
+				</section>
 
-
+				<!-- まとめ -->
+				<section>
+					<p>簡単にですが、いろんなツールを紹介しました。</p>
+				</section>
+				<section>
+					<p>自分も、詳しくないものが多いので、<br
+					>一緒に勉強して行きましょう</p>
+				</section>
+				<section>
+					<p>そして、ラクしましょう</p>
+					</section>
+				<section>
+					<p>以上です</p>
+				</section>
 
 			</div>
 

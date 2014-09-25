@@ -11,12 +11,16 @@
 
 ## 各構成要素の必要性
 
+![](img/network_diagram.png)
+
+---
+
 * ロードバランサ
 * WEBサーバ
 * アプリケーションサーバ
 * データベース
   * RDB
-  * KVS
+  * NoSQL
 
 ---
 
@@ -34,7 +38,7 @@ Elastic Load Balancing（ELB）とか。
 
 Apache とか Nginxとか。
 
-* 静的なリソースを返すよ
+* 静的なリソース(HTML/CSS/JSなど)を返すよ
 * 動的な処理はアプリケーションサーバに依頼するよ
 
 ---
@@ -44,6 +48,13 @@ Apache とか Nginxとか。
 Tomcat とか Jetty とか Unicorn とか。
 
 * JavaとかRailsのアプリケーションが動作するよ
+* 動的なリソースを返すよ
+  * DBの情報をJSON形式にして返したり
+  * ログインユーザに合わせたHTMLを返したり
+
+<small style="margin-top: 40px;">
+物理的には、WEB＋アプリケーションで1台のサーバにすることが多いと思います。
+</small>
 
 ---
 
@@ -52,18 +63,24 @@ Tomcat とか Jetty とか Unicorn とか。
 MySQL とか PostgreSQL とか。
 
 * 永続的な情報を保存するよ
+* データ同士に関連性を持たせられるよ
 
 ---
 
-### データベース（KVS）
+### データベース（NoSQL）
 
-memcache とか Redis とか。
+memcache とか Redis とか MongoDB とか。
 
-* 主に一時的な情報を保存するよ（キャッシュですね）
+* RDB以外をひとまとめに呼んでるだけなので、  
+  いろいろな種類があるよ
+  * memcacheは、一時的な情報を保存するのによく使われるよ
+  * Redisは、memcacheに近い使い方も出来るし、  
+  もうちょっと凝ったことも出来るよ
+  * MongoDBは、巨大なデータを扱うときによく使われるよ
 
 
 <small style="margin-top: 40px;">
-データベースには色んな種類があるので、広く浅く知りたい人には [7つのデータベース 7つの世界](http://shop.ohmsha.co.jp/shop/shopdetail.html?brandcode=000000003596) がオススメです。</small>
+データベースには色んな種類があるので、広く浅く知りたい人には [7つのデータベース 7つの世界](http://shop.ohmsha.co.jp/shop/shopdetail.html?brandcode=000000003596) がオススメ。</small>
 
 ---
 

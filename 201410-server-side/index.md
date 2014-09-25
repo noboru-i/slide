@@ -3,11 +3,13 @@
 * 平易な表現にするために、切り捨てた部分があるよ
 * 私個人の意見・経験が含まれていますよ
 
-何が正しいかは自分で調べる！
+---
+
+## なので、<br>間違ってたら教えて下さい。
 
 ---
 
-## 各構成要素（LB、WEB、AP、DB）の必要性
+## 各構成要素の必要性
 
 * ロードバランサ
 * WEBサーバ
@@ -37,13 +39,67 @@ Apache とか Nginxとか。
 
 ---
 
+### アプリケーションサーバ
+
+Tomcat とか Jetty とか Unicorn とか。
+
+* JavaとかRailsのアプリケーションが動作するよ
+
+---
+
+### データベース（RDB）
+
+MySQL とか PostgreSQL とか。
+
+* 永続的な情報を保存するよ
+
+---
+
+### データベース（KVS）
+
+memcache とか Redis とか。
+
+* 主に一時的な情報を保存するよ（キャッシュですね）
+
+
+<small style="margin-top: 40px;">
+データベースには色んな種類があるので、広く浅く知りたい人には [7つのデータベース 7つの世界](http://shop.ohmsha.co.jp/shop/shopdetail.html?brandcode=000000003596) がオススメです。</small>
+
+---
+
 ## ケーススタディ
   
 * ケーススタディ。この案件ではこうゆう要件があったので、こうゆう構成にした。など。
 
 ---
 
-## ChefとかCapistranoとかの層の話
+## インフラ構築系技術の話
 
-* Chef
-* Capistrano
+* Provisioning Tools
+  * kickstart
+* Configuration Management Tools
+  * chef
+  * puppet
+* Orchestration Tools
+  * Capistrano
+  * fabric
+
+<small style="margin-top: 40px;">参考： [Linuxサーバ構築ツールまとめ](http://tkak.hatenablog.com/entry/2012/03/11/084905)</small>
+
+---
+
+## Provisioning Tools
+
+* よく知りません。
+
+---
+
+## Configuration Management Tools
+
+* Nginxとかのミドルウェアのインストール・設定を行うよ。
+
+---
+
+## Orchestration Tools
+
+* デプロイとかするよ。

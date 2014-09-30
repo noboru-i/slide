@@ -11,16 +11,26 @@
 
 ## 各構成要素の必要性
 
-![](img/network_diagram.png)
+<img src="img/network_diagram.png" style="background-color: #ffffff;">
 
 ---
 
+* CDN
 * ロードバランサ
 * WEBサーバ
 * アプリケーションサーバ
 * データベース
   * RDB
   * NoSQL
+
+---
+
+### Contents Delivery Network(CDN)
+
+Amazon CloudFront とか Akamai とか。
+
+* （主に静的な）リソースをキャッシュするよ
+* 地理的に分散されているため、どこからでも高速にアクセス出来るよ
 
 ---
 
@@ -39,7 +49,7 @@ Elastic Load Balancing（ELB）とか。
 Apache とか Nginxとか。
 
 * 静的なリソース(HTML/CSS/JSなど)を返すよ
-* 動的な処理はアプリケーションサーバに依頼するよ
+* 動的な処理はアプリケーションサーバに依頼(Reverse proxy)するよ
 
 ---
 
@@ -64,6 +74,7 @@ MySQL とか PostgreSQL とか。
 
 * 永続的な情報を保存するよ
 * データ同士に関連性を持たせられるよ
+* 読み込みはレプリカを増やせばスケールできるけど、書き込みがネックになると辛いよ
 
 ---
 
@@ -90,7 +101,7 @@ memcache とか Redis とか MongoDB とか。
 
 ---
 
-## インフラ構築系技術の話
+## Infrastracture as a codeの話
 
 * Provisioning Tools
   * kickstart
@@ -101,7 +112,9 @@ memcache とか Redis とか MongoDB とか。
   * Capistrano
   * fabric
 
-<small style="margin-top: 40px;">参考： [Linuxサーバ構築ツールまとめ](http://tkak.hatenablog.com/entry/2012/03/11/084905)</small>
+<small style="margin-top: 40px;">参考： <br>
+[Linuxサーバ構築ツールまとめ](http://tkak.hatenablog.com/entry/2012/03/11/084905)<br>
+[最近のインフラ系ツールが多すぎて何が何だかわからない！からの卒業](http://qiita.com/kasaharu/items/59b8d3a76b4a22eab88e)</small>
 
 ---
 

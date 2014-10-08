@@ -22,7 +22,7 @@
 * データベース
   * RDB
   * NoSQL
-* 画像ストレージサーバ
+* ストレージサーバ
 
 ---
 
@@ -98,15 +98,18 @@ memcache とか Redis とか MongoDB とか。
 
 ---
 
-### 画像ストレージサーバ
+### ストレージサーバ
 
-S3 とか、
+S3 とか NFSで構築 とか。
+
+* ユーザがアップロードした画像とかを保存するよ
+* NFSとかを利用して、独自に構築してもいいけど、可用性・信頼性を考えるとS3を使ったほうがベターだよ
 
 ---
 
 ## ケーススタディ
 
-* ケーススタディ。この案件ではこうゆう要件があったので、こうゆう構成にした。など。
+この案件ではこうゆう要件があったので、こうゆう構成にした。など。
 
 ---
 
@@ -160,13 +163,8 @@ PUSH通知の一斉配信対象が数万ユーザになった
 ## Infrastracture as a codeの話
 
 * Provisioning Tools
-  * kickstart
 * Configuration Management Tools
-  * chef
-  * puppet
 * Orchestration Tools
-  * Capistrano
-  * fabric
 
 <small style="margin-top: 40px;">参考： <br>
 [Linuxサーバ構築ツールまとめ](http://tkak.hatenablog.com/entry/2012/03/11/084905)<br>
@@ -176,11 +174,15 @@ PUSH通知の一斉配信対象が数万ユーザになった
 
 ## Provisioning Tools
 
+kickstart とか。
+
 * よく知りません。
 
 ---
 
 ## Configuration Management Tools
+
+chef とか puppet とか。
 
 * Nginxとかのミドルウェアのインストール・設定を行うよ。
 
@@ -188,4 +190,14 @@ PUSH通知の一斉配信対象が数万ユーザになった
 
 ## Orchestration Tools
 
+Capistrano とか fabric とか。
+
 * デプロイとかするよ。
+
+---
+
+## とりあえず、以上です。
+
+<small style="margin-top: 40px;">
+つづく、かもしれない。
+</small>

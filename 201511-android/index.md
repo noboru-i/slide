@@ -27,6 +27,12 @@
 
 ---
 
+他人の書いたコードでよく見かけるこんなやつ。
+
+TODO インデントのズレ・定数なのに小文字・末尾の空白
+
+---
+
 「インデント、ズレてますよ」とか  
 いちいちレビューで指摘したくない。
 
@@ -41,7 +47,7 @@ Checkstyleをみんなが<strong style="color: red;">忘れず</strong>守れば
 
 ---
 
-ところで、  
+一方、  
 GitHubのプルリクに  
 コメントあったら見ますよね？
 
@@ -67,13 +73,27 @@ Checkstyleの結果を
 
 ---
 
+TODO circle.ymlの設定・sadder.shの中身をちょっと見せる
+
+---
+
 で、こうなる
 
 <img src="img/pull_request_sample.png">
 
 ---
 
-みんな HAPPY！
+詳しくはWEBで。
+
+[Androidのコードを自動で解析し、GitHubのpull requestにコメントする - Qiita](http://qiita.com/noboru_i/items/2f30296db1c8a6dfbd9b)
+
+---
+
+WE ARE HIRING!
+
+[株式会社モンスター・ラボ - Wantedly](https://www.wantedly.com/companies/monstarlab)
+
+<img src="img/wantedly.png">
 
 ---
 

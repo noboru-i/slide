@@ -1,6 +1,6 @@
 # Androidのコードを
-# 自動で解析し、
-# GitHubのPRに
+# 自動で解析し
+# GitHubのプルリクに
 # コメントする
 
 ---
@@ -11,8 +11,10 @@
 - 株式会社モンスター・ラボ所属
   - 受託でアプリとかWEBサービスとか作ってます
 - 富山県の自宅でリモートワーク中
+- Twitter : [@noboru_i](https://twitter.com/noboru_i)
 
 <img src="img/ml.png" style="border: none">
+<img src="img/desk.jpg" style="border: none">
 
 ---
 
@@ -27,18 +29,28 @@
 
 ---
 
-他人の書いたコードでよく見かけるこんなやつ。
+たまにプルリクで上がってくるこんなやつ。
 
-TODO インデントのズレ・定数なのに小文字
+<img src="img/warnings.png">
+
+<small style="text-align: left;">
+・未使用のimportが残ってる  
+・static finalなのに、変数名が小文字  
+・スペースが無い
+</small>
 
 ---
 
-「インデント、ズレてますよ」とか  
+「ここにスペースを入れて」とか  
 いちいちレビューで指摘したくない。
 
 ---
 
-Checkstyleというものがあってだな。。。
+「それ、Checkstyleで指摘してくれるよ。」
+
+---
+
+ならば
 
 ---
 
@@ -47,11 +59,12 @@ Checkstyleをみんなが<strong style="color: red;">忘れず</strong>守れば
 ---
 
 でも、忘れますよね。  
+
 にんげんだもの
 
 ---
 
-一方、  
+いっぽう、  
 GitHubのプルリクに  
 コメントあったら見ますよね？
 
@@ -64,6 +77,10 @@ Checkstyleの結果を
 
 既にありました。
 <img src="img/ruby-saddler.png">
+
+<small>
+[packsaddle/ruby-saddler](https://github.com/packsaddle/ruby-saddler)
+</small>
 
 ---
 
@@ -212,9 +229,17 @@ CircleCIがチェックしてくれる。
 
 ---
 
-で、こうなる
+<img src="img/comments.png" style="width: 70%;">
 
-<img src="img/pull_request_sample.png">
+---
+
+統一されたフォーマット！
+
+細かく指摘して嫌われない！
+
+---
+
+みんなHAPPY！
 
 ---
 

@@ -1,4 +1,4 @@
-# jQueryを使った怖い話
+## jQueryを使った怖い話
 
 ---
 
@@ -26,231 +26,289 @@
 
 ---
 
-たまにプルリクで上がってくるこんなやつ。
+## 注意
 
-<img src="img/warnings.png">
-
-<small style="text-align: left;">
-・未使用のimportが残ってる  
-・static finalなのに、変数名が小文字  
-・スペースが無い
-</small>
+このスライドに出てくる出来事はフィクションです。  
+実在の人物や団体などとは関係ありません。
 
 ---
 
-「ここにスペースを入れて」とか  
-いちいちレビューで指摘したくない。
+昔々、あるところに動画共有サービスを受託した会社がありました。  
+
+（話を単純化するため、PC限定とします）
 
 ---
 
-「それ、Checkstyleで指摘してくれるよ。」
+## 天の声（お客様）
+
+１つの動画終わったら、次の動画に自動で切り替わってね。
 
 ---
 
-ならば
+## エンジニア
+
+わかりました！
+
+（次の動画ページに遷移したらいいんだろ？簡単だな）
 
 ---
 
-Checkstyleをみんなが<strong style="color: red;">忘れず</strong>守れば解決！
-
----
-
-でも、忘れますよね。  
-
-にんげんだもの
-
----
-
-いっぽう、  
-GitHubのプルリクに  
-コメントあったら見ますよね？
-
----
-
-Checkstyleの結果を  
-コメントにしたらいいんじゃね？
-
----
-
-既にありました。
-<img src="img/ruby-saddler.png">
-
-<small>
-[packsaddle/ruby-saddler](https://github.com/packsaddle/ruby-saddler)
-</small>
-
----
-
-あとは、pushしたらこれが動けばいい
-
----
-
-ということで、  
-CircleCIにやってもらいましょう。
-
----
-
-こんな感じ
-
-<img src="img/auto_review_image.png" style="background-color: white; border-width: 24px;">
-
-<small>
-ついでなので、  
-FindbugsとかAndroid Lintとか  
-いろいろやってもらいましょう。
-</small>
-
----
-
-まず、CircleCIの環境設定をして、
-
-<img src="img/circleci_env.png">
-
----
-
-build.gradleにチェック項目を追加して、
+videoタグのIDは`video`だから・・・
 
 ```
-apply from: "https://raw.githubusercontent.com/monstar-lab/gradle-android-ci-check/1.1.0/ci.gradle"
-```
+var v = document.getElementById('video');
 
-<small>詳細は [monstar-lab/gradle-android-ci-check](https://github.com/monstar-lab/gradle-android-ci-check)</small>
-
----
-
-saddler.shとして、  
-チェックの実行と  
-プルリクへの反映をするscriptを書き、
-
-```
-#!/usr/bin/env bash
-
-echo "********************"
-echo "* install gems     *"
-echo "********************"
-gem install --no-document checkstyle_filter-git saddler saddler-reporter-github findbugs_translate_checkstyle_format android_lint_translate_checkstyle_format pmd_translate_checkstyle_format
-
-if [ $? -ne 0 ]; then
-    echo 'Failed to install gems.'
-    exit 1
-fi
-
-echo "********************"
-echo "* exec gradle      *"
-echo "********************"
-./gradlew app:check
-
-if [ $? -ne 0 ]; then
-    echo 'Failed gradle check task.'
-    exit 1
-fi
-
-echo "********************"
-echo "* save outputs     *"
-echo "********************"
-
-LINT_RESULT_DIR="$CIRCLE_ARTIFACTS/lint"
-
-mkdir "$LINT_RESULT_DIR"
-cp -v "app/build/reports/checkstyle/checkstyle.xml" "$LINT_RESULT_DIR/"
-cp -v "app/build/reports/findbugs/findbugs.xml" "$LINT_RESULT_DIR/"
-cp -v "app/build/reports/pmd/pmd.xml" "$LINT_RESULT_DIR/"
-cp -v "app/build/reports/pmd/cpd.xml" "$LINT_RESULT_DIR/"
-cp -v "app/build/outputs/lint-results.xml" "$LINT_RESULT_DIR/"
-
-echo "********************"
-echo "* select reporter  *"
-echo "********************"
-
-if [ -z "${CI_PULL_REQUEST}" ]; then
-    # when not pull request
-    REPORTER=Saddler::Reporter::Github::CommitReviewComment
-else
-    REPORTER=Saddler::Reporter::Github::PullRequestReviewComment
-fi
-
-echo "********************"
-echo "* checkstyle       *"
-echo "********************"
-cat app/build/reports/checkstyle/checkstyle.xml \
-    | checkstyle_filter-git diff origin/master \
-    | saddler report --require saddler/reporter/github --reporter $REPORTER
-
-echo "********************"
-echo "* findbugs         *"
-echo "********************"
-cat app/build/reports/findbugs/findbugs.xml \
-    | findbugs_translate_checkstyle_format translate \
-    | checkstyle_filter-git diff origin/master \
-    | saddler report --require saddler/reporter/github --reporter $REPORTER
-
-echo "********************"
-echo "* PMD              *"
-echo "********************"
-cat app/build/reports/pmd/pmd.xml \
-    | pmd_translate_checkstyle_format translate \
-    | checkstyle_filter-git diff origin/master \
-    | saddler report --require saddler/reporter/github --reporter $REPORTER
-
-echo "********************"
-echo "* PMD-CPD          *"
-echo "********************"
-cat app/build/reports/pmd/cpd.xml \
-    | pmd_translate_checkstyle_format translate --cpd-translate \
-    | checkstyle_filter-git diff origin/master \
-    | saddler report --require saddler/reporter/github --reporter $REPORTER
-
-echo "********************"
-echo "* android lint     *"
-echo "********************"
-cat app/build/outputs/lint-results.xml \
-    | android_lint_translate_checkstyle_format translate \
-    | checkstyle_filter-git diff origin/master \
-    | saddler report --require saddler/reporter/github --reporter $REPORTER
+v.addEventListener('ended', function(){
+  location.href = 'https://hoge.com/video/2'
+}, false);
 ```
 
 ---
 
-circle.ymlのtestとして実行するように設定。
+## エンジニア
+
+出来ました！見てください！
+
+---
+
+## 天の声
+
+いや、こーゆーんじゃ無いんだよ。
+
+ニコ動とか見てみてよ。  
+切り替わるときに真っ白にならないでしょ？  
+そんな感じによろしく。
+
+---
+
+## エンジニア
+
+そうですね。。。わかりました。少々お待ち下さい。
+
+（そういうことは先に言って欲しいなー）
+
+---
+
+ってことは、DOMを書き換えれば良いんだろ。
 
 ```
-test:
-  override:
-    - ./scripts/saddler.sh
+var v = document.getElementById('video');
+
+v.addEventListener('ended', function(){
+  v.src = next_video.url;
+}, false);
 ```
 
 ---
 
-あとは、修正をpushする度に  
-CircleCIがチェックしてくれる。
+## エンジニア
+
+出来ました！
 
 ---
 
-<img src="img/comments.png" style="width: 70%;">
+## 天の声
+
+あー、そうそう。こんな感じ。  
+ただ、タイトル切り替えるの忘れてない？
 
 ---
 
-統一されたフォーマット！
+## エンジニア
 
-細かく指摘して嫌われない！
-
----
-
-みんなHAPPY！
+あ・・・直します！
 
 ---
 
-詳しくはWEBで。
+さっきのに追加して、タイトルも変えればいいんだろ？  
+忘れてただけで簡単簡単。
 
-[Androidのコードを自動で解析し、GitHubのpull requestにコメントする - Qiita](http://qiita.com/noboru_i/items/2f30296db1c8a6dfbd9b)
+```
+var v = document.getElementById('video');
+
+v.addEventListener('ended', function(){
+  v.src = next_video.url;
+  $('.video_title').text(next_video.title);
+}, false);
+```
 
 ---
 
-WE ARE HIRING!
+## エンジニア
 
-[株式会社モンスター・ラボ - Wantedly](https://www.wantedly.com/companies/monstarlab)
+出来ました！
 
-<img src="img/wantedly.png">
+---
+
+## 天の声
+
+そうそう。これでいい。
+
+んじゃ次、メタデータいろいろあるから、それ表示して。
+
+---
+
+## エンジニア
+
+そうなんですね。対応します。
+
+（それ、仕様追加じゃ。。。）
+
+---
+
+```
+<div class="video_title"><%= @video.title %></div>
+<video src="<%= @video.url %>"></video>
+<div>
+  <div class="video_description"><%= @video.description %></div>
+  <div class="video_length"><%= @video.length %></div>
+  <div class="video_position"><%= @video.position %>/<%= @video.max_position %></div>
+</div>
+```
+
+---
+
+## エンジニア
+
+出来ました！
+
+---
+
+## 天の声
+
+はいはい。ありがと。
+
+ただ、次に切り替わった時もちゃんと変えてね。
+
+---
+
+## エンジニア
+
+あ、はい。今やります！
+
+---
+
+データはあるから、それを適用したらいいだけだし。簡単簡単。
+
+```
+var v = document.getElementById('video');
+
+v.addEventListener('ended', function(){
+  v.src = next_video.url;
+  $('.video_title').text(next_video.title);
+  $('.video_description').text(next_video.description);
+  $('.video_length').text(next_video.length);
+  $('.video_position').text(next_video.position + '/' + next_video.max_position);
+}, false);
+```
+
+---
+
+## エンジニア
+
+出来ました！
+
+---
+
+## 天の声
+
+はい、ありがとー。
+
+次は、前後の動画を出してね。
+
+---
+
+## 天の声
+
+じゃぁ、関連動画も出そうか。
+
+---
+
+## 天の声
+
+動画にコメント付けれるようにしといて。
+
+---
+
+## 天の声
+
+あ、もちろん、次の動画に行くときは、それらも変えてね。
+
+---
+
+## エンジニア
+
+え、あ、はい。やります。
+
+---
+
+```
+var v = document.getElementById('video');
+
+v.addEventListener('ended', function(){
+  v.src = next_video.url;
+  $('.video_title').text(next_video.title);
+  $('.video_description').text(next_video.description);
+  $('.video_length').text(next_video.length);
+  $('.video_position').text(next_video.position + '/' + next_video.max_position);
+
+  for (int i = 0; i < 4; i++) {
+    $series_box = $('.video_series_' + i);
+    $('.titile', $series_box).text(series[i].title);
+    $('.thumbnail', $series_box).src(series[i].thumbnail);
+  }
+
+  for (int i = 0; i < 4; i++) {
+    $related_box = $('.video_related_' + i);
+    $('.titile', $related_box).text(related[i].title);
+    $('.thumbnail', $related_box).src(related[i].thumbnail);
+  }
+
+  $('.comment_box').empty();
+  for (int i = 0; i < 20; i++) {
+    $comment = $('<div />');
+    $comment.append($('<div />').addClass('comment_name').text(comments[i].name));
+    $comment.append($('<div />').addClass('comment_content').text(comments[i].content));
+  }
+}, false);
+```
+
+---
+
+・・・
+
+---
+
+おわかりいただけただろうか
+
+---
+
+こうやってDOM操作が大量に増えていくのである。
+
+---
+
+そして、仕様変更によって表示項目が変わり、  
+さらに複雑化していくのである。
+
+---
+
+・・・
+
+---
+
+まぁ、バグも出ますよねぇ。
+
+---
+
+## 解決策
+
+1. テンプレートエンジンを使う
+2. vue.jsとかReactとかを使う
+
+---
+
+jQueryは簡単に見た目を変えれますが、  
+使いすぎにはご注意を。
 
 ---
 

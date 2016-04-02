@@ -4,6 +4,9 @@
 
 株式会社モンスター・ラボ 石倉 昇
 
+個人アプリをGCPからAWSに移行しようとしてる話
+〜Terraformで作り始めてるところまで〜
+
 ---
 
 ## 免責事項
@@ -477,7 +480,7 @@ digraph {
 
 ---
 
-graphviz で画像出力するとこんな感じ
+graphviz で画像出力するとこんな感じです。
 
 <img src="img/graph.png" />
 
@@ -485,7 +488,7 @@ graphviz で画像出力するとこんな感じ
 
 ### 導入方法
 
-Macの場合、下記でお手軽に始められる。
+Macの場合、Homebrewで一発。
 
 ```
 brew install terraform
@@ -500,22 +503,34 @@ WindowsやLinux用のバイナリもあります。 [Installing Terraform](https
 ### Terraformの基本的な使い方
 
 - 実行計画を確認
-
 ```sh
 terraform plan
 ```
 
 - 反映する
-
 ```sh
 terraform apply
 ```
 
 - 削除する
-
 ```sh
 terraform destroy
 ```
+
+---
+
+### Terraformの基本的な使い方
+
+カレントディレクトリの*.tfを実行してくれる。
+
+```ruby
+resource "リソースの種類" "任意の名前" {
+  属性 = "値"
+}
+```
+
+リソースの一覧
+[Provider: AWS](https://www.terraform.io/docs/providers/aws/index.html)
 
 ---
 
@@ -570,7 +585,7 @@ resource "aws_s3_bucket" "main" {
 
 ---
 
-#### aws_s3_bucket-policy/main.json
+#### 例：S3 (aws_s3_bucket-policy/main.json)
 
 ```json
 {
@@ -586,13 +601,107 @@ resource "aws_s3_bucket" "main" {
   ]
 }
 ```
+---
+
+### 例：EC2とELB
+
+```ruby
+resource "aws_instance" "ecs-instance" {
+    ami = "ami-b3afa2dd"
+    instance_type = "t2.micro"
+    key_name = "aws_key"
+    security_groups = ["${aws_security_group.allow_all.id}"]
+    monitoring = true
+    subnet_id = "${aws_subnet.kyouen-subnet.id}"
+    associate_public_ip_address = true
+    user_data = "${file("aws_instance-user_data/userdata.sh")}"
+    iam_instance_profile = "ec2_profile"
+}
+
+resource "aws_elb" "kyouen-elb" {
+  name = "kyouen-elb"
+  subnets = ["${aws_subnet.kyouen-subnet.id}"]
+  security_groups = ["${aws_security_group.allow_all.id}"]
+
+  listener {
+    instance_port = 3000
+    instance_protocol = "http"
+    lb_port = 80
+    lb_protocol = "http"
+  }
+
+  health_check {
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    timeout = 3
+    target = "HTTP:3000/"
+    interval = 30
+  }
+
+  instances = ["${aws_instance.ecs-instance.id}"]
+  cross_zone_load_balancing = true
+  idle_timeout = 400
+  connection_draining = true
+  connection_draining_timeout = 400
+}
+```
 
 ---
 
-### オチ
+### 例：ECS
+
+```ruby
+resource "aws_ecs_cluster" "kyouen-cluster" {
+  name = "kyouen-cluster"
+}
+
+resource "aws_ecs_task_definition" "kyouen-registry" {
+  family = "kyouen-registry"
+  container_definitions = "${file("aws_ecs_task_definition-container_definitions/kyouen.json")}"
+}
+
+resource "aws_ecs_service" "kyouen-service" {
+  name = "kyouen-service"
+  cluster = "${aws_ecs_cluster.kyouen-cluster.id}"
+  task_definition = "${aws_ecs_task_definition.kyouen-registry.arn}"
+  desired_count = 1
+  iam_role = "${aws_iam_role.ecs_role.arn}"
+  deployment_maximum_percent = 100
+  deployment_minimum_healthy_percent = 0
+  depends_on = ["aws_iam_role_policy.AmazonEC2ContainerServiceRole"]
+
+  load_balancer {
+    elb_name = "${aws_elb.kyouen-elb.id}"
+    container_name = "kyouen"
+    container_port = 3000
+  }
+}
+```
+
+---
+
+### デモ
+
+- 実行
+```sh
+terraform plan
+terraform apply
+```
+
+- 作成されたリソースの確認
+
+- 削除
+```sh
+terraform destroy
+```
+
+---
+
+### やってみてわかった
 
 t2.micro一台では、無停止デプロイが出来ない。
-[Amazon ECS に途中で挫折しないために | ORIH](http://orih.io/2015/12/a-few-things-i-wanted-to-know-before-playing-with-amazon-ecs/)
+
+詳細は[Amazon ECS に途中で挫折しないために | ORIH](http://orih.io/2015/12/a-few-things-i-wanted-to-know-before-playing-with-amazon-ecs/)
 
 ---
 
@@ -605,14 +714,28 @@ t2.micro一台では、無停止デプロイが出来ない。
 
 [AWSのDockerデプロイサービスを比較する ｜ Developers.IO](http://dev.classmethod.jp/cloud/aws-docker-service-catalog/)
 
-ちょっとまだ調査不足。
+小規模だと、ECS辛そうなので、EBに変えようと模索中。
 
 ---
 
 ## 結論
 
-個人でお手軽にサービスを公開するには、PaaSが最高
+個人でお手軽にサービスを公開するには、PaaSが最高。
 
-Google App Engineは昔から使ってきているが、
+AWSの各種サービスと繋げるなら、<br>
+やっぱりAWS上のインフラ。
 
-IBM Bluemixも無料枠が大きくていい感じ。
+---
+
+## 結論その２
+
+個人でWEBサービスを持っていると、<br>
+いろいろ遊べるのでおすすめ
+
+ユーザ数が大きくなると<br>
+身動き取りづらくなりそうなので、<br>
+少人数がそれなりに使ってくれるサービスが理想（？）
+
+---
+
+## ありがとうございました。

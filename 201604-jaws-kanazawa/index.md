@@ -17,8 +17,9 @@
 ## 自己紹介
 - 石倉 昇
 - [株式会社モンスター・ラボ](https://monstar-lab.com/) 所属
-  - 受託でアプリとかWEBサービスとか作ってる会社
-- 富山県の自宅でリモートワーク中
+  - 受託でアプリとかWEBサービスとか作ってる
+  - オフショアもがっつりやってる
+- 富山市内の自宅でリモートワーク中
 - Twitter: [@noboru_i](https://twitter.com/noboru_i)
 - GitHub: [noboru-i](https://github.com/noboru-i)
 
@@ -58,7 +59,7 @@
 
 ---
 
-5年前ほどから個人的に運用しているアプリの話です。
+5年ほど前から個人的に運用しているアプリの話です。
 
 Google Cloud Platform上で動かしていましたが、<br>
 ふと思い立って別のサーバへの移行を計画しました。
@@ -91,9 +92,16 @@ Google Cloud Platform上で動かしていましたが、<br>
 - 各プレイヤーは１人１個ずつ順番に、囲碁みたいな感じでコマを盤上の格子点に置いていきます。
 - このとき、各プレイヤーは、「同一円周上にある４つのコマ」が発生しないように気をつけてコマを置いていかなければなりません。
 
+<small>参考： [http://nadamath2012.web.fc2.com/program/kyouen1.html](http://nadamath2012.web.fc2.com/program/kyouen1.html)</small>
+
 <small style="position: absolute; right: 0; bottom: 0;">photo by <a href="https://www.flickr.com/photos/nachof/2453994998">Michel got his goban and stones / nachof</a></small>
 
 ---
+
+## 詰め共円とは
+
+複数の配置されてる石の中から、4つを選んで、<br>
+それが同一円周上にあれば正解。
 
 <img src="img/kyouen.png" />
 
@@ -107,10 +115,10 @@ Google Cloud Platform上で動かしていましたが、<br>
 Android / iOS / WEB
 
 - Google App Engine
-- Google Cloud Datastore
-- Python
+- Python (webapp2, jinja2)
   - APIサーバ（for iOS / Android）
   - SPAっぽい構成
+- Google Cloud Datastore
 
 ---
 
@@ -156,9 +164,20 @@ Android / iOS / WEB
 
 ---
 
+### PaaS
+
+- Platform as a Service
+- コードを書けば、Webサービスが動く
+  - インフラの管理とかしなくて良い
+- デプロイも容易
+  - Blue Green Deployment
+
+---
+
 ### Spin-up問題
 
-- ほとんど使われてないので、インスタンスが落ちている。
+- ほとんど使われてないので、  
+インスタンスが落ちている。
   - 立ち上がるまでに時間がかかる。
 
 ---
@@ -166,7 +185,10 @@ Android / iOS / WEB
 ### Spin-upの対策
 
 - HTMLの返却はSpin-up時間がかからない
-- ページの外形だけHTMLで返却後、Ajaxで読み込むことにしたら、体感は早い
+- ページの外形だけHTMLで返却後、  
+Ajaxで読み込むことにしたら、体感は早い
+
+<img src="img/page_load.png" />
 
 ---
 
@@ -178,11 +200,14 @@ Android / iOS / WEB
 
 - 会社でPythonを使うことが無さそう
 - Ruby on Railsのアプリケーションを持っていたい
-  - 会社で利用が増えてきたので、Gemとかのテスト用に
+  - 会社で利用が増えてきたので、  
+  Gemとかのテスト用に
+  - GAEではPyhon/Java/PHP/Goのみサポート  
+   (2016/02現在)
 - 会社でGoogle Cloud Platformを使うことが無さそう
 - IaaSの運用経験も積みたい
 
-（でも、あんまりにも面倒なことはやりたくない）
+<small>（でも、あんまりにも面倒なことはやりたくない）</small>
 
 ---
 
@@ -197,7 +222,7 @@ Android / iOS / WEB
 
 ### しかし先月
 
-[［速報］Google App EngineがRubyとNode.jsのサポートを発表。GCP Next 2016 － Publickey](http://www.publickey1.jp/blog/16/google_app_enginerubynodejsgcp_next_2016.html)
+[Google App EngineがRubyとNode.jsのサポートを発表。](http://www.publickey1.jp/blog/16/google_app_enginerubynodejsgcp_next_2016.html)
 
 移行する意味が半分ぐらい消失orz
 
@@ -216,6 +241,7 @@ Android / iOS / WEB
 
 - Amazon RDS
 - Amazon ElastiCache
+- Heroku Add-on
 - Cloud Datastore
 - Amazon DynamoDB
 
@@ -239,6 +265,19 @@ Android / iOS / WEB
 - 簡単にスケールアップ・スケールアウト。
 - 簡単にバックアップ・リストア。
 - AWSの各種サービスとのセキュアな連携が可能。
+
+---
+
+#### Heroku Add-on
+- 各種サービスによって無料枠が違う
+- [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql)
+  - 1万行まで。$9/月で1000万行まで。
+- [ClearDB MySQL](https://elements.heroku.com/addons/cleardb) / [JawsDB MySQL](https://elements.heroku.com/addons/jawsdb)
+  - 5MBまで。$10/月で1GB。
+- 他にも、RedisやNeo4jなどもあるが、どれも容量制限が厳しめ。
+  - とはいえ、無料でちょっと使えるので、  
+  プロトタイプとかには良いかも。
+- Heroku上で使うのであれば、環境変数を設定してくれたりと楽。
 
 ---
 
@@ -278,8 +317,8 @@ Android / iOS / WEB
 - さくらのVPS
 - Google Container Engine (GKE)
 - Heroku
-- AWS ElasticBeanstalk (EB)
 - IBM Bluemix
+- AWS ElasticBeanstalk (EB)
 - Amazon EC2 Container Service (ECS)
 
 ---
@@ -296,14 +335,15 @@ Android / iOS / WEB
 ---
 
 #### Google Container Engine (GKE)
-- 5ノードまで無料（？）
-  - Compute Engineの料金がかかるっぽい。  
-  最安で$4/月ぐらい？（でも、sharedだから弱いかも？）
+- 5ノードまで無料
+  - Compute Engineの料金がかかる。  
+  最安で$4/月ぐらい。（でも、sharedだから弱いかも？）
   - スタンダード マシンなら、$25.55/月  
   参考：[Google Cloud Platform 料金計算ツール](https://cloud.google.com/products/calculator/?hl=ja)
 - ほぼデファクトなコンテナ管理ツール：Kubernetesを使える
 - プライベートな Container Registry が付いてる
-- 安心と実績のGoogleのDocker実行・管理
+  - ストレージとデータ送信の料金のみ。
+- コンテナ技術を使い倒してきたGoogleのサービス
 
 ---
 
@@ -315,21 +355,21 @@ Android / iOS / WEB
 
 ---
 
-#### AWS ElasticBeanstalk (EB)
-- ELB + EC2構成が簡単に構築できる。
-- PaaSに近い。デプロイなども手軽に出来る。
-- JavaやPHPなど、Herokuと同程度の言語サポート。
-- Dockerもサポート。
-- IAMを使って、AWSの各種サービスとの連携が容易。
-
----
-
 #### IBM Bluemix
 - "Instant Runtimes" はいわいるPaaS。
   - Javaやphpなど複数の言語をサポート。
 - "Containers" はDockerの実行環境。
 - 512Mメモリのインスタンスが無料で利用できる。
   - 128Mメモリ x 4、という使い方も出来る。
+
+---
+
+#### AWS ElasticBeanstalk (EB)
+- ELB + EC2構成が簡単に構築できる。
+- PaaSに近い。デプロイなども手軽に出来る。
+- JavaやPHPなど、Herokuと同程度の言語サポート。
+- Dockerもサポート。
+- IAMを使って、AWSの各種サービスとの連携が容易。
 
 ---
 
@@ -379,7 +419,8 @@ https://www.terraform.io
 
 - HashiCorpのインフラ構築用のツール。
 - CloudFormationのように、コードでAWSリソースを記述出来る。
-- AWS以外にも、AzureやGoogle Cloudも操作できる。
+- AWS以外にも、AzureやGoogle Cloudも操作できる。  
+[Providers](https://www.terraform.io/docs/providers/index.html) に一覧があります。
 
 ---
 
@@ -717,16 +758,19 @@ t2.micro一台では、無停止デプロイが出来ない。
 
 ## 結論
 
-個人でお手軽にサービスを公開するには、PaaSが最高。
+個人でお手軽にサービスを公開するには、PaaSが最高。<br>
+<small>GAEとかBluemixとかまじ安い。</small>
 
 AWSの各種サービスと繋げるなら、<br>
-やっぱりAWS上のインフラ。
+やっぱりAWS上のインフラ。<br>
+<small>LambdaとかIoTとか使ってみたいのがいろいろ</small>
 
-Terraformは便利。
+Terraformは便利。<br>
+<small>Management Consoleでぽちぽちやるのに疲れた</small>
 
 ---
 
-## 結論その２
+## 結論 その２
 
 個人でWEBサービスを持っていると、<br>
 いろいろ遊べるのでおすすめ

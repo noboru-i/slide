@@ -85,12 +85,18 @@ Google Cloud Platform上で動かしていましたが、<br>
 
 ---
 
+## アプリ版
+
+<img src="img/private_work_marked.png" />
+
+---
+
 ## そもそも、共円とは
 
 <!-- .slide: data-background="img/goban.png" -->
 
-- 各プレイヤーは１人１個ずつ順番に、囲碁みたいな感じでコマを盤上の格子点に置いていきます。
-- このとき、各プレイヤーは、「同一円周上にある４つのコマ」が発生しないように気をつけてコマを置いていかなければなりません。
+- 各プレイヤーは１人１個ずつ順番に、囲碁みたいな感じでコマを盤上の格子点に置いていきます
+- このとき、各プレイヤーは、「同一円周上にある４つのコマ」が発生しないように気をつけてコマを置いていかなければなりません
 
 <small>参考： [http://nadamath2012.web.fc2.com/program/kyouen1.html](http://nadamath2012.web.fc2.com/program/kyouen1.html)</small>
 
@@ -101,7 +107,7 @@ Google Cloud Platform上で動かしていましたが、<br>
 ## 詰め共円とは
 
 複数の配置されてる石の中から、4つを選んで、<br>
-それが同一円周上にあれば正解。
+それが同一円周上にあれば正解
 
 <img src="img/kyouen.png" />
 
@@ -142,7 +148,7 @@ Android / iOS / WEB
 
 - Google App Engine
   - せいぜいで、秒間0.15リクエスト（だいたい0.03で収まる）
-  - たまに人が来る、というレベル。
+  - たまに人が来る、というレベル
 
 <img src="img/kyouen_usage.png" />
 
@@ -177,14 +183,15 @@ Android / iOS / WEB
 ### Spin-up問題
 
 - ほとんど使われてないので、  
-インスタンスが落ちている。
-  - 立ち上がるまでに時間がかかる。
+インスタンスが落ちている
+  - 立ち上がるまでに時間がかかる
 
 ---
 
 ### Spin-upの対策
 
 - HTMLの返却はSpin-up時間がかからない
+- Javaに比べると、Pythonはそもそも早い
 - ページの外形だけHTMLで返却後、  
 Ajaxで読み込むことにしたら、体感は早い
 
@@ -200,23 +207,22 @@ Ajaxで読み込むことにしたら、体感は早い
 
 - 会社でPythonを使うことが無さそう
 - Ruby on Railsのアプリケーションを持っていたい
-  - 会社で利用が増えてきたので、  
-  Gemとかのテスト用に
+  - 会社で増えてきたので、Gemとかのテスト用に
   - GAEではPyhon/Java/PHP/Goのみサポート  
    (2016/02現在)
 - 会社でGoogle Cloud Platformを使うことが無さそう
-- IaaSの運用経験も積みたい
+  - GAE以外での運用経験も積みたい
 
 <small>（でも、あんまりにも面倒なことはやりたくない）</small>
 
 ---
 
-### 他、優先度の低い細かな動機
+### ついでに
 - Dockerとか流行ってるし使ってみたい
 - AWSのいろんなサービス使ってみたい
   - SNSとかCognitoとかLambdaとかCodeDeployとか...
 - WebSocketとかやってみたい  
-（Channel APIってので出来るらしいけど。）
+（Channel APIってので出来るらしいけど）
 
 ---
 
@@ -233,7 +239,7 @@ Ajaxで読み込むことにしたら、体感は早い
 ---
 
 注：¥100/月ぐらいしか稼げてないアプリなので、<br>
-最小金額にこだわっています。
+最小金額にこだわっています
 
 ---
 
@@ -248,59 +254,62 @@ Ajaxで読み込むことにしたら、体感は早い
 ---
 
 #### Amazon RDS
-- t2.microで約$20/月。  
+- t2.microで約$20/月  
 （MySQLの場合。Multi-AZにしたらさらに倍。）
-- 高い信頼性と拡張性。
+- 高い信頼性と拡張性
   - 簡単にスケールアップ
   - 簡単にリードレプリカを複製
-- 簡単にバックアップ・リストア。
-- AWSの各種サービスとのセキュアな連携が可能。
+- 簡単にバックアップ・リストア
+- AWSの各種サービスとのセキュアな連携が可能
+- MySQL, Aurora, MariaDBなど6つのエンジンから選べる
 
 ---
 
 #### Amazon ElastiCache
-- t2.microで約$20/月。
-- エンジンとして、Memcached / Redisから選択できる。
+- t2.microで約$20/月
+- エンジンとして、Memcached / Redisから選択できる
   - Redisであれば、高い表現力。（SortedSetなど）
-- 簡単にスケールアップ・スケールアウト。
-- 簡単にバックアップ・リストア。
-- AWSの各種サービスとのセキュアな連携が可能。
+- 簡単にスケールアップ・スケールアウト
+- 簡単にバックアップ・リストア
+- AWSの各種サービスとのセキュアな連携が可能
 
 ---
 
 #### Heroku Add-on
 - 各種サービスによって無料枠が違う
 - [Heroku Postgres](https://elements.heroku.com/addons/heroku-postgresql)
-  - 1万行まで。$9/月で1000万行まで。
+  - 1万行まで無料
+  - $9/月で1000万行まで
 - [ClearDB MySQL](https://elements.heroku.com/addons/cleardb) / [JawsDB MySQL](https://elements.heroku.com/addons/jawsdb)
-  - 5MBまで。$10/月で1GB。
-- 他にも、RedisやNeo4jなどもあるが、どれも容量制限が厳しめ。
+  - 5MBまで無料
+  - $10/月で1GB
+- 他にも、RedisやNeo4jなどもあるが、どれも容量制限が厳しめ
   - とはいえ、無料でちょっと使えるので、  
-  プロトタイプとかには良いかも。
-- Heroku上で使うのであれば、環境変数を設定してくれたりと楽。
+  プロトタイプとかには良いかも
+- Heroku上で使うのであれば、環境変数を設定してくれたりと楽
 
 ---
 
 #### Cloud Datastore
-- 無料で一定量使える。
-  - 1日50kの読み取り、書き込みが可能。  
+- 無料で一定量使える
+  - 1日50kの読み取り、書き込みが可能  
   https://cloud.google.com/datastore/#pricing
-- 自動的にスケール。
-- RESTfulインターフェースでアクセス可能。
-- GoogleのApp EngineやCompute Engineとの高い親和性。
+- 自動的にスケール
+- RESTfulインターフェースでアクセス可能
+- GoogleのApp EngineやCompute Engineとの高い親和性
   - App Engineでは接続情報とかを意識せずに操作出来る
 
 ---
 
 #### Amazon DynamoDB
-- 無料で一定量使える。
-  - 25 GBの無料ストレージ。
-  - 最大25の書き込み容量ユニット。
-  - 25の読み込み容量ユニットのスループット容量。
-- 低レイテンシ。
-- NoSQLデータベース。
-- AWSの各種サービスとのセキュアな連携が可能。
-- Lambdaと連携してイベントドリブンにも出来る。
+- 無料で一定量使える
+  - 25 GBの無料ストレージ
+  - 最大25の書き込み容量ユニット
+  - 25の読み込み容量ユニットのスループット容量
+- 低レイテンシ
+- NoSQLデータベース
+- AWSの各種サービスとのセキュアな連携が可能
+- Lambdaと連携してイベントドリブンにも出来る
 
 ---
 
@@ -336,47 +345,47 @@ Ajaxで読み込むことにしたら、体感は早い
 
 #### Google Container Engine (GKE)
 - 5ノードまで無料
-  - Compute Engineの料金がかかる。  
-  最安で$4/月ぐらい。（でも、sharedだから弱いかも？）
+  - Compute Engineの料金がかかる  
+  最安で$4/月ぐらい（でも、sharedだから弱いかも？）
   - スタンダード マシンなら、$25.55/月  
   参考：[Google Cloud Platform 料金計算ツール](https://cloud.google.com/products/calculator/?hl=ja)
 - ほぼデファクトなコンテナ管理ツール：Kubernetesを使える
 - プライベートな Container Registry が付いてる
-  - ストレージとデータ送信の料金のみ。
+  - ストレージとデータ送信の料金のみ
 - コンテナ技術を使い倒してきたGoogleのサービス
 
 ---
 
 #### Heroku
-- $7/月。
-- Rubyを始め、複数の言語をサポート。
-- Dockerもサポート。（制限あり）
-- 様々なAdd-onで、RDBやRedis、Monitoringなどを簡単に追加できる。
+- $7/月
+- Rubyを始め、複数の言語をサポート
+- Dockerもサポート（制限あり）
+- 様々なAdd-onで、RDBやRedis、Monitoringなどを簡単に追加できる
 
 ---
 
 #### IBM Bluemix
-- "Instant Runtimes" はいわいるPaaS。
-  - Javaやphpなど複数の言語をサポート。
-- "Containers" はDockerの実行環境。
-- 512Mメモリのインスタンスが無料で利用できる。
-  - 128Mメモリ x 4、という使い方も出来る。
+- "Instant Runtimes" はいわいるPaaS
+  - Javaやphpなど複数の言語をサポート
+- "Containers" はDockerの実行環境
+- 512Mメモリのインスタンスが無料で利用できる
+  - 128Mメモリ x 4、という使い方も出来る
 
 ---
 
 #### AWS ElasticBeanstalk (EB)
-- ELB + EC2構成が簡単に構築できる。
-- PaaSに近い。デプロイなども手軽に出来る。
-- JavaやPHPなど、Herokuと同程度の言語サポート。
-- Dockerもサポート。
-- IAMを使って、AWSの各種サービスとの連携が容易。
+- ELB + EC2構成が簡単に構築できる
+- PaaSに近く、デプロイなども手軽に出来る
+- JavaやPHPなど、Herokuと同程度の言語サポート
+- Dockerもサポート
+- IAMを使って、AWSの各種サービスとの連携が容易
 
 ---
 
 #### Amazon EC2 Container Service (ECS)
-- Dockerの運用に特化。
-- EC2インスタンスをクラスタ化。
-- ELBやデプロイは自分でなんとかしないといけない。
+- Dockerの運用に特化
+- EC2インスタンスをクラスタ化
+- ELBやデプロイは自分でなんとかしないといけない
 
 ---
 
@@ -417,10 +426,10 @@ EBかECS
 
 https://www.terraform.io
 
-- HashiCorpのインフラ構築用のツール。
-- CloudFormationのように、コードでAWSリソースを記述出来る。
-- AWS以外にも、AzureやGoogle Cloudも操作できる。  
-[Providers](https://www.terraform.io/docs/providers/index.html) に一覧があります。
+- HashiCorpのインフラ構築用のツール
+- CloudFormationのように、コードでAWSリソースを記述出来る
+- AWS以外にも、AzureやGoogle Cloudも操作できる  
+[Providers](https://www.terraform.io/docs/providers/index.html) に一覧があります
 
 ---
 
@@ -526,7 +535,7 @@ graphviz で画像出力するとこんな感じです。
 
 ### 導入方法
 
-Macの場合、Homebrewで一発。
+Macの場合、Homebrewで一発
 
 ```
 brew install terraform
@@ -559,7 +568,7 @@ terraform destroy
 
 ### Terraformの基本的な使い方
 
-カレントディレクトリの*.tfを実行してくれる。
+カレントディレクトリの*.tfを実行してくれる
 
 ```ruby
 resource "リソースの種類" "任意の名前" {
@@ -737,7 +746,7 @@ terraform destroy
 
 ### やってみてわかった
 
-t2.micro一台では、無停止デプロイが出来ない。
+t2.micro一台では、無停止デプロイが出来ない
 
 詳細は[Amazon ECS に途中で挫折しないために | ORIH](http://orih.io/2015/12/a-few-things-i-wanted-to-know-before-playing-with-amazon-ecs/)
 
@@ -745,27 +754,27 @@ t2.micro一台では、無停止デプロイが出来ない。
 
 ### ElasticBeanstalk Dockerで良いのでは？
 
-- お手軽に始めるのであれば、圧倒的にElasticBeanstalkが楽。
-  - Service とか Taskとかの概念を学ばなくてもいい。
-  - デプロイとかもいい感じにやってくれるっぽい。
+- お手軽に始めるのであれば、圧倒的にElasticBeanstalkが楽
+  - Service とか Taskとかの概念を学ばなくてもいい
+  - デプロイとかもいい感じにやってくれるっぽい
 - 複数のEC2インスタンス x 複数種類のDocker containerとかになると、ECSの柔軟性が必要？
 
 [AWSのDockerデプロイサービスを比較する ｜ Developers.IO](http://dev.classmethod.jp/cloud/aws-docker-service-catalog/)
 
-小規模だと、ECS辛そうなので、EBに変えようと模索中。
+小規模だと、ECS辛そうなので、EBに変えようと模索中
 
 ---
 
 ## 結論
 
-個人でお手軽にサービスを公開するには、PaaSが最高。<br>
-<small>GAEとかBluemixとかまじ安い。</small>
+個人でお手軽にサービスを公開するには、PaaSが最高<br>
+<small>GAEとかBluemixとかまじ安い</small>
 
 AWSの各種サービスと繋げるなら、<br>
-やっぱりAWS上のインフラ。<br>
+やっぱりAWS上のインフラ<br>
 <small>LambdaとかIoTとか使ってみたいのがいろいろ</small>
 
-Terraformは便利。<br>
+Terraformは便利<br>
 <small>Management Consoleでぽちぽちやるのに疲れた</small>
 
 ---

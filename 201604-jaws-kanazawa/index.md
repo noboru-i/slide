@@ -366,7 +366,7 @@ Ajaxで読み込むことにしたら、体感は早い
 
 #### IBM Bluemix
 - "Instant Runtimes" はいわいるPaaS
-  - Javaやphpなど複数の言語をサポート
+  - Rubyを始め、複数の言語をサポート
 - "Containers" はDockerの実行環境
 - 512Mメモリのインスタンスが無料で利用できる
   - 128Mメモリ x 4、という使い方も出来る
@@ -376,7 +376,7 @@ Ajaxで読み込むことにしたら、体感は早い
 #### AWS ElasticBeanstalk (EB)
 - ELB + EC2構成が簡単に構築できる
 - PaaSに近く、デプロイなども手軽に出来る
-- JavaやPHPなど、Herokuと同程度の言語サポート
+- Rubyを始め、複数の言語をサポート
 - Dockerもサポート
 - IAMを使って、AWSの各種サービスとの連携が容易
 

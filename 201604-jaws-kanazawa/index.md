@@ -31,6 +31,10 @@
 
 ---
 
+[年末にやったネタ](https://twitter.com/noboru_i/status/682390162886623233)
+
+---
+
 ### 個人で作ってるアプリ
 
 ![](img/private_work.png)

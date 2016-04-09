@@ -437,8 +437,9 @@ https://www.terraform.io
 
 - バージョン管理出来る
   - [Terraform + GitHub + CircleCI + Atlasを利用してAWSの操作を自動化した - Glide Note](http://blog.glidenote.com/blog/2015/02/18/terraform-github-circleci-atlas-aws/)
+  - GitHubのPull Requestベースでインフラ変更が出来る
 - 作ったものを綺麗さっぱり削除できる
-- Management Consoleのスクショで手順を説明しなくていい
+- Management Consoleのスクショで手順書を作らなくていい（はず）
 
 ---
 

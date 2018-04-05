@@ -1,7 +1,13 @@
+https://gitpitch.com/noboru-i/slide/201804-kzrb?p=201804-kzrb
+
+---
+
 # 開発環境自慢
 
-@css[gold](Monstar Lab, Inc.)  
+<p style="font-size: 0.6em; text-align: right;">
+Monstar Lab, Inc.  
 石倉 昇 （ @noboru-i / [@noboru_i](https://twitter.com/noboru_i)）
+</p>
 
 ---
 

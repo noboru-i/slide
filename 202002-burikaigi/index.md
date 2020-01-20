@@ -46,7 +46,7 @@ h4 {
 
 ---
 
-## 自己紹介
+## 自己紹介 (1/2)
 
 - 名前 : 石倉 昇 (Twitter: @noboru_i)
 - 出身地 : 富山県富山市
@@ -57,11 +57,23 @@ h4 {
 
 ---
 
+## 自己紹介 (2/2)<br>作ったアプリ
+
+![bg right contain](kyouen_android.png)
+
+詰め共円
+
+- iOS
+- Android
+- Web
+
+---
+
 ## 株式会社 モンスター・ラボ
 
 - 本社は恵比寿
-- Web系の受託開発がメイン
-- 音楽配信事業やゲーム開発もやってる
+- スマホアプリ や toCのWebサービス の受託開発がメイン
+- 音楽配信事業やRPA導入、教育事業などもやってる
 - 15ヵ国・26都市に拠点がある
 - 恵比寿の本社内にも、外国籍メンバーが多数
 
@@ -73,12 +85,17 @@ h4 {
 
 ## 本題
 
+![width:160px](rails-logo.png)
 RubyといえばRuby on Rails
 
 ですが、
 それ以外の場所でもRubyの便利さ・楽しさが活用されています
 
 今回は、スマホアプリ周辺での2つの活用事例を紹介します
+
+
+fastlane ![width:120px](fastlane-logo.png) &nbsp;&nbsp;&nbsp;&nbsp; Danger ![width:120px](danger-logo.png)
+
 
 ---
 
@@ -130,8 +147,6 @@ end
 
 他にも、いろいろなアクションが標準で用意されています
 
-（独自アクションも作れます）
-
 ---
 
 <style scoped>
@@ -178,15 +193,36 @@ module Fastlane
 
 ---
 
+## 独自アクションの作り方概要
+
+https://docs.fastlane.tools/create-action/
+
+`fastlane new_action` を実行するとアクション名を聞かれる。
+
+`fastlane/actions/[action_name].rb` が出力されるので、そこに実装。
+`available_options` や `description`
+
+`Fastfile` に `[action_name].run(hoge_param: "XXX")` を書いて実行。 
+
+---
+
 ## ビルドスクリプト (Fastfile)
 
 Fastfile自体もRubyで記述します
+
+```ruby
+# イメージ（再掲）
+lane :beta do
+  build_app
+  upload_to_testflight
+end
+```
 
 事例を3つほど紹介します
 
 ---
 
-### 1. ビルドブランチ名で、Schemeを変えてipaを作成
+### 1. ビルドブランチ名で、Schemeを変えてipaを作成 (CircleCI)
 
 ```ruby
 lane :build do
@@ -194,7 +230,7 @@ lane :build do
   my_scheme = case branch_name
               when "master"
                 "sampleRelease"
-              when /release-\d/
+              when /release-\d/ # 例 : release-3
                 "sampleStg"
               else
                 "sampleDev"
@@ -211,7 +247,10 @@ end
 
 ```ruby
 private_lane :get_output_name do |options|
-  version = get_info_plist_value(path: "./Info.plist", key: "CFBundleShortVersionString")
+  version = get_info_plist_value(
+    path: "./Info.plist",
+    key: "CFBundleShortVersionString"
+  ) # 例 : "1.0.2"
   date = Date.today.strftime("%Y-%m-%d")
   options[:prefix] + "_" + version + "_" + date
 end
@@ -220,6 +259,8 @@ lane :build do |options|
   build_app(output_name: get_output_name(options))
 end
 ```
+
+`get_info_plist_value` : plistから、任意の値を取得できる
 
 ---
 
@@ -235,11 +276,23 @@ end
 end
 ```
 
+`set_info_plist_value` : plistの、任意の値を変更できる
+
 ---
+
+<style scoped>
+h4 {
+  font-size: 2rem;
+  text-align: right;
+  margin-top: -120px;
+}
+</style>
 
 つまり
 
 # Rubyができれば、<br>プロジェクトに合わせた<br>ビルドスクリプトが書ける
+
+#### (+iOSの知識は必要)
 
 ---
 
@@ -272,12 +325,14 @@ https://danger.systems/ruby/
 
 ---
 
-## もうちょっと具体的なDangerの使い方
+## もうちょっと具体的なDangerの動作イメージ
 
 - GitHub の Pull Request 作成を検知
 - CIサービス（CircleCI など）上で利用する
 - ktlint や SwiftLint などを実行する
 - Pull Requestにコメントをつける
+
+![width:800px](danger_image.png)
 
 ---
 
@@ -293,7 +348,21 @@ GitHub上の表示例 (2/2)
 
 ---
 
-## Dangerの設定方法
+## 他の連携
+
+- Repository
+    - GitHub
+    - GitLab
+    - Bitbucket
+- CI
+    - Travis CI
+    - CircleCI
+    - Bitrise
+    - etc...
+
+---
+
+## プリミティブなDangerの設定方法
 
 `Dangerfile` というファイルに、Ruby (DSL) を書く
 
@@ -304,6 +373,21 @@ GitHub上の表示例 (2/2)
 - `fail("Our linter has failed.")`
 - `markdown("## ")`
 - `warn("Please add your name", file: "CHANGELOG.md", line: 4)`
+
+---
+
+使えるメソッド例
+
+- Git
+    - added_files / deleted_files / modified_files / renamed_files
+    - lines_of_code
+    - diff_for_file
+    - etc...
+- GitHub
+    - pr_title / pr_body / pr_author / pr_labels
+    - branch_for_base / branch_for_head
+    - base_commit / head_commit
+    - etc...
 
 ---
 
@@ -340,7 +424,21 @@ module Danger
       # ...
 ```
 
-利用方法
+---
+
+## 利用方法
+
+`Gemfile`
+
+```ruby
+# frozen_string_literal: true
+source "https://rubygems.org"
+
+gem 'danger'
+gem 'danger-checkstyle_format'
+```
+
+`Dangerfile`
 
 ```ruby
 checkstyle_format.base_path = Dir.pwd
@@ -359,7 +457,7 @@ checkstyle_format.report 'app/build/reports/checkstyle/checkstyle.xml'
 
 Dangerfile自体もRubyで記述します
 
-事例を3つほど紹介します
+pluginにするほどでもない(？)事例を3つほど紹介します
 
 ---
 
@@ -383,7 +481,7 @@ Ruby でそのまま書けます
 
 if git.modified_files.include? "app/src/main/res/layout/*.xml"
     && !(github.pr_body.include?("![]") || github.pr_body.include?("<img"))
-  failure "キャプチャを添付してください"
+  fail("キャプチャを添付してください")
 end
 ```
 
@@ -397,7 +495,7 @@ end
 ```ruby
 if git.modified_files.include? "app/src/main/java/**/*.kt"
     && !git.modified_files.include? "app/src/test/**/*.kt"
-  failure "テストコードが変更されていません"
+  fail("テストコードが変更されていません")
 end
 ```
 
@@ -416,7 +514,7 @@ end
 - CircleCI の Artifact に保存したテスト結果の HTML のリンク
 - API ドキュメントの生成結果リンク
 
-など、 PR 毎の青果物へのリンクが PR に貼ってあると便利ですね。
+など、 PR 毎の成果物へのリンクが PR に貼ってあると便利ですね。
 
 ---
 

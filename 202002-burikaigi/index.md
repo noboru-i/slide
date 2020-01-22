@@ -48,11 +48,12 @@ h4 {
 
 ## 自己紹介 (1/2)
 
-- 名前 : 石倉 昇 (Twitter: @noboru_i)
-- 出身地 : 富山県富山市
-- 所在地 : 富山県富山市
-- 所属 : 株式会社 モンスター・ラボ
-- 勤務形態 : フルリモートワーク
+![bg right](desk.jpg)
+
+- 名前 : 石倉 昇<br>(Twitter: @noboru_i)
+- 出身/居住地 : 富山県富山市
+- 所属 :<br>株式会社 モンスター・ラボ
+- 勤務形態 :<br>フルリモートワーク
 - 興味範囲 : Android / Flutter / iOS / CI/CD / Rails / AWS / React / Nuxt.js / Laravel
 
 ---
@@ -567,3 +568,7 @@ URLさえ取得できれば簡単
 
 - fastlane は、Swift 版が beta リリース済み
 - Danger は、 JavaScript 版と Swift 版がリリース済み
+
+---
+
+# ご清聴ありがとうございました

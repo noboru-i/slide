@@ -72,10 +72,10 @@ h4 {
 ## 株式会社 モンスター・ラボ
 
 - 本社は恵比寿
-- スマホアプリ や toCのWebサービス の受託開発がメイン
-- 音楽配信事業やRPA導入、教育事業などもやってる
 - 15ヵ国・26都市に拠点がある
 - 恵比寿の本社内にも、外国籍メンバーが多数
+- スマホアプリ や toCのWebサービス の受託開発がメイン
+- 音楽配信事業やRPA導入、教育事業などもやってる
 
 ---
 
@@ -222,7 +222,7 @@ end
 
 ---
 
-### 1. ビルドブランチ名で、Schemeを変えてipaを作成 (CircleCI)
+### 1. ビルドブランチ名でSchemeを変えて、ipaを作成 (CircleCI)
 
 ```ruby
 lane :build do
@@ -243,40 +243,52 @@ end
 
 ---
 
-### 2. tag名から、出力ipaの名前を生成
+### 2. tag名から、出力ipaのバージョン情報を書き換え
 
 ```ruby
-private_lane :get_output_name do |options|
-  version = get_info_plist_value(
+private_lane :apply_version do
+  set_info_plist_value(
     path: "./Info.plist",
     key: "CFBundleShortVersionString"
-  ) # 例 : "1.0.2"
-  date = Date.today.strftime("%Y-%m-%d")
-  options[:prefix] + "_" + version + "_" + date
+    value: ENV['CIRCLE_TAG'] # 例 : "1.0.2"
+  )
 end
 
 lane :build do |options|
-  build_app(output_name: get_output_name(options))
-end
-```
-
-`get_info_plist_value` : plistから、任意の値を取得できる
-
----
-
-### 3. 複数のplistのバージョンを一括で変更
-
-```ruby
-%w{free premium}.each do |scheme|
-  set_info_plist_value(
-    path: "./" + scheme + ".plist",
-    key: "CFBundleShortVersionString",
-    value: option[:new_version]
-  )
+  apply_version()
+  build_app()
 end
 ```
 
 `set_info_plist_value` : plistの、任意の値を変更できる
+
+---
+<style scoped>
+h4 {
+  font-size: 1.4rem;
+  text-align: right;
+  margin-top: 20px;
+}
+</style>
+
+### 3. 複数のplistのバージョンを一括で変更
+
+```ruby
+lane :update_version do |options|
+  %w{free premium}.each do |scheme|
+    set_info_plist_value(
+      path: "./" + scheme + ".plist",
+      key: "CFBundleShortVersionString",
+      value: options[:new_version]
+    )
+  end
+end
+```
+
+実行コマンド
+`fastlane update_version new_version:1.0.2`
+
+#### 実は、 `increment_version_number` が用意されてます
 
 ---
 
@@ -349,6 +361,8 @@ GitHub上の表示例 (2/2)
 ---
 
 ## 他の連携
+
+![bg right contain](danger_image.png)
 
 - Repository
     - GitHub
@@ -457,7 +471,10 @@ checkstyle_format.report 'app/build/reports/checkstyle/checkstyle.xml'
 
 Dangerfile自体もRubyで記述します
 
-pluginにするほどでもない(？)事例を3つほど紹介します
+pluginの設定・実行や、
+プロジェクト固有のチェックを記述します
+
+事例を3つほど紹介します
 
 ---
 

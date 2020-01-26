@@ -46,7 +46,7 @@ h4 {
 
 ---
 
-## 自己紹介 (1/2)
+## 自己紹介 (1/3)
 
 ![bg right](desk.jpg)
 
@@ -58,7 +58,19 @@ h4 {
 
 ---
 
-## 自己紹介 (2/2)<br>作ったアプリ
+## 自己紹介 (2/3)<br>参加コミュニティ
+
+- Toyama.rb
+  - 毎月第2土曜日
+  - 主に「もくもく会」
+  - ほぼ毎回参加してます
+- Kanazawa.rb
+  - 毎月第3土曜日
+  - 最近は、あまり参加できてないです 😿
+
+---
+
+## 自己紹介 (3/3)<br>作ったアプリ
 
 ![bg right contain](kyouen_android.png)
 
@@ -116,7 +128,7 @@ fastlane ![width:120px](fastlane-logo.png) &nbsp;&nbsp;&nbsp;&nbsp; Danger ![wid
 
 ---
 
-## iOSのビルドやデプロイって辛くない？
+## iOSのビルドやデプロイって辛くない？ 😇
 
 1. ipaを作るのが面倒
     - XcodeのGUIで行う
@@ -308,12 +320,20 @@ h4 {
 #### (+iOSの知識は必要)
 
 ---
+<style scoped>
+h4 {
+  font-size: 2rem;
+  font-weight: normal;
+}
+</style>
 
 # 事例2 : Danger
 
+#### ここで、12分ぐらい？
+
 ---
 
-## コードレビュー辛くない？
+## コードレビュー辛くない？ 😇
 
 - インデントがずれてる
 - 変数名にsnake_caseとcamelCaseが混在してる
@@ -558,13 +578,13 @@ URLさえ取得できれば簡単
 
 ## まとめ
 
-- Rubyが書ければ、開発環境を良くできる
+- Rubyが書ければ、開発環境を良くできる 💪
     - fastlane でアプリのビルド・デプロイを自動化できる
     - Danger でレビュー周りを自動化できる
 
 ---
 
-## ちなみに
+## ちなみに 😅
 
 - fastlane は、Swift 版が beta リリース済み
 - Danger は、 JavaScript 版と Swift 版がリリース済み

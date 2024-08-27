@@ -1,638 +1,322 @@
 ---
-# You can also start simply with 'default'
 theme: seriph
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
-title: Welcome to Slidev
-info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
+background: none
+canvasWidth: 640
+fonts:
+  sans: "Noto Sans Japanese"
+  serif: "Noto Serif Japanese"
+  mono: "Roboto Mono"
 
-  Learn more at [Sli.dev](https://sli.dev)
-# apply unocss classes to the current slide
-class: text-center
-# https://sli.dev/features/drawing
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
-transition: slide-left
+transition: fade
 # enable MDC Syntax: https://sli.dev/features/mdc
 mdc: true
+download: false
+lineNumbers: false
 ---
 
-# Welcome to Slidev
+# pigeonで<br>ネイティブ連携
 
-Presentation slides for developers
+FlutterKaigi mini #2 @Ishikawa
 
-<div class="pt-12">
-  <span @click="$slidev.nav.next" class="px-2 py-1 rounded cursor-pointer" hover="bg-white bg-opacity-10">
-    Press Space for next page <carbon:arrow-right class="inline"/>
-  </span>
+<div class="absolute right-30px bottom-30px">
+@noboru-i
 </div>
-
-<div class="abs-br m-6 flex gap-2">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" alt="GitHub" title="Open in GitHub"
-    class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
-</div>
-
-<!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
--->
-
----
-transition: fade-out
----
-
-# What is Slidev?
-
-Slidev is a slides maker and presenter designed for developers, consist of the following features
-
-- 📝 **Text-based** - focus on the content with Markdown, and then style them later
-- 🎨 **Themable** - themes can be shared and re-used as npm packages
-- 🧑‍💻 **Developer Friendly** - code highlighting, live coding with autocompletion
-- 🤹 **Interactive** - embed Vue components to enhance your expressions
-- 🎥 **Recording** - built-in recording and camera view
-- 📤 **Portable** - export to PDF, PPTX, PNGs, or even a hostable SPA
-- 🛠 **Hackable** - virtually anything that's possible on a webpage is possible in Slidev
-<br>
-<br>
-
-Read more about [Why Slidev?](https://sli.dev/guide/why)
-
-<!--
-You can have `style` tag in markdown to override the style for the current page.
-Learn more: https://sli.dev/features/slide-scope-style
--->
-
-<style>
-h1 {
-  background-color: #2B90B6;
-  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
-  background-size: 100%;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-}
-</style>
-
-<!--
-Here is another comment.
--->
-
----
-transition: slide-up
-level: 2
----
-
-# Navigation
-
-Hover on the bottom-left corner to see the navigation's controls panel, [learn more](https://sli.dev/guide/navigation.html)
-
-## Keyboard Shortcuts
-
-|     |     |
-| --- | --- |
-| <kbd>right</kbd> / <kbd>space</kbd>| next animation or slide |
-| <kbd>left</kbd>  / <kbd>shift</kbd><kbd>space</kbd> | previous animation or slide |
-| <kbd>up</kbd> | previous slide |
-| <kbd>down</kbd> | next slide |
-
-<!-- https://sli.dev/guide/animations.html#click-animation -->
-<img
-  v-click
-  class="absolute -bottom-9 -left-7 w-80 opacity-50"
-  src="https://sli.dev/assets/arrow-bottom-left.svg"
-  alt=""
-/>
-<p v-after class="absolute bottom-23 left-45 opacity-30 transform -rotate-10">Here!</p>
 
 ---
 layout: two-cols
-layoutClass: gap-16
 ---
 
-# Table of contents
+# About me
 
-You can use the `Toc` component to generate a table of contents for your slides:
-
-```html
-<Toc minDepth="1" maxDepth="1"></Toc>
-```
-
-The title will be inferred from your slide content, or you can override it with `title` and `level` in your frontmatter.
+- name: 石倉 昇
+- <carbon-logo-twitter />: noboru_i
+- 所属: 株式会社モンスターラボ
+- 勤務地: 富山県富山市<br>（2015年からリモート）
 
 ::right::
 
-<Toc v-click minDepth="1" maxDepth="2"></Toc>
+<div class="relative">
+  <img src="/images/avatar.jpeg" class="absolute left-10 bg-gray-400 rounded-full h-40 w-40 border-4 border-secondary-400 right">
+</div>
 
 ---
-layout: image-right
-image: https://cover.sli.dev
+layout: two-cols
 ---
 
-# Code
+Flutterでアプリを開発してても、<br>
+platform-specific codeを実行したいことありますよね？
 
-Use code snippets and get the highlighting directly, and even types hover![^1]
+<div class="text-xs text-slate-400">
+※ platform-specific code<br>
+= KotlinやSwiftのコード
+</div>
 
-```ts {all|5|7|7-8|10|all} twoslash
-// TwoSlash enables TypeScript hover information
-// and errors in markdown code blocks
-// More at https://shiki.style/packages/twoslash
+::right::
 
-import { computed, ref } from 'vue'
+<img src="/images/PlatformChannels.png" class="p-4">
 
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
+<div class="absolute bottom-4 right-2 text-xs text-slate-400">
+https://docs.flutter.dev/platform-integration/platform-channels
+</div>
 
-doubled.value = 2
+---
+
+# 例えば
+
+- 別プロジェクトでネイティブで作り込んだものの流用
+- 広告系SDKの導入
+- 機器の操作系（IoTデバイスSDKとかプリンターSDKとか）
+- ニッチなライブラリ（MIDI再生とか）
+
+---
+
+# そんなとき
+
+### MethodChannelなどの実装をするが、手間が多い
+<br>
+
+- Dart側のinterfaceを作成
+- Kotlinでメッセージ受信して処理実行して結果をまとめて返却
+- Swiftで...（略）
+
+複数の値を一度にやり取りしたい場合、それぞれのプラットフォームでdata class的なものを作成しなければならない。
+
+---
+
+# イメージ
+
+全部自分で実装
+
+<img src="/draw/before.drawio.svg" class="h-50">
+
+---
+
+# 例：バッテリー情報取得
+
+ref: https://docs.flutter.dev/platform-integration/platform-channels
+
+上記の公式ドキュメントでは、パラメータ無しで実行、数値型が返ってくるだけ。
+
+現実的には、複数の値の送受信が必要となる。
+
+今回は例として、電池残量（int）と充電中かどうか（bool）を返す。
+
+---
+
+# Data class
+
+<div class="-mt-2 grid grid-cols-2 gap-4">
+<div>
+Flutter (Dart)
+
+```dart
+@JsonSerializable()
+class BatteryResult {
+  BatteryResult({
+    required this.level,
+    required this.isCharging,
+  });
+
+  final int level;
+  final bool isCharging;
+
+  // fromJson, toJsonの定義
+}
 ```
 
-<arrow v-click="[4, 5]" x1="350" y1="310" x2="195" y2="334" color="#953" width="2" arrowSize="1" />
+</div>
+<div>
+Android (Kotlin)
 
-<!-- This allow you to embed external code blocks -->
-<<< @/snippets/external.ts#snippet
+```kotlin
+@Serializable
+data class BatteryResult (
+  val level: Int
+  val isCharging: Boolean
+)
+```
 
-<!-- Footer -->
-[^1]: [Learn More](https://sli.dev/guide/line-highlighting)
+iOS (Swift)
 
-<!-- Inline style -->
-<style>
-.footnotes-sep {
-  @apply mt-5 opacity-10;
+```swift
+struct BatteryResult: Codable {
+  var level: Int
+  var isCharging: Bool
 }
-.footnotes {
-  @apply text-sm opacity-75;
-}
-.footnote-backref {
-  display: none;
-}
-</style>
-
-<!--
-Notes can also sync with clicks
-
-[click] This will be highlighted after the first click
-
-[click] Highlighted with `count = ref(0)`
-
-[click:3] Last click (skip two clicks)
--->
+```
+</div>
+</div>
 
 ---
-level: 2
+
+# Interface (1/3)
+
+Flutter (Dart)
+
+ネイティブコードを実行した結果をJSON文字列で受信して、クラスに変換する。
+
+```dart
+class BatteryApi {
+  static const platform = MethodChannel('samples.flutter.dev/battery');
+  Future<BatteryResult> getBatteryLevel() async {
+    final resultJson = await platform.invokeMethod<String>('getBatteryLevel');
+    return BatteryResult.fromJson(jsonDecode(resultJson));
+  }
+}
+```
+
+必要なところでインスタンス化して、getBatteryLevelを呼び出す
+
 ---
 
-# Shiki Magic Move
+# Interface (2/3)
 
-Powered by [shiki-magic-move](https://shiki-magic-move.netlify.app/), Slidev supports animations across multiple code snippets.
+Android (Kotlin)
 
-Add multiple code blocks and wrap them with <code>````md magic-move</code> (four backticks) to enable the magic move. For example:
+```kotlin
+private val CHANNEL = "samples.flutter.dev/battery"
 
-````md magic-move {lines: true}
-```ts {*|2|*}
-// step 1
-const author = reactive({
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
+MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler {
+  call, result ->
+  if (call.method == "getBatteryLevel") {
+    val batteryLevel = getBatteryLevel()
+    val isCharging = getIsCharging()
+    val json = Json.encodeToString(BatteryResult(batteryLevel, isCharging))
+
+    result.success(json)
+  }
+}
+```
+
+---
+
+# Interface (3/3)
+
+iOS (Swift)
+
+```swift
+let batteryChannel = FlutterMethodChannel(name: "samples.flutter.dev/battery",
+                                          binaryMessenger: controller.binaryMessenger)
+batteryChannel.setMethodCallHandler({
+  [weak self] (call: FlutterMethodCall, result: FlutterResult) -> Void in
+  if call.method == "getBatteryLevel" {
+    let batteryLevel = getBatteryLevel()
+    let isCharging = getIsCharging()
+    let batteryResult = BatteryResult(level: batteryLevel, isCharging: isCharging)
+
+    let encoder = JSONEncoder()
+    result(encoder.encode(batteryResult))
+  }
 })
 ```
 
-```ts {*|1-2|3-4|3-4,8}
-// step 2
-export default {
-  data() {
-    return {
-      author: {
-        name: 'John Doe',
-        books: [
-          'Vue 2 - Advanced Guide',
-          'Vue 3 - Basic Guide',
-          'Vue 4 - The Mystery'
-        ]
-      }
-    }
-  }
+---
+
+# 問題点
+
+- data classを3言語で定義しなければならない
+    - 追加・削除・更新したい場合に手間
+    - typoする危険性
+    - 型を間違える危険性
+- 関数名がただの文字列
+    - typoする危険性
+    - リファクタリングしづらい
+
+---
+
+# そこでpigeon
+
+https://pub.dev/packages/pigeon
+
+> Pigeon is a code generator tool to make communication between Flutter and the host platform type-safe, easier, and faster.
+
+Google翻訳
+
+> Pigeon は、Flutter とホスト プラットフォーム間の通信をタイプセーフ、簡単、高速にするコード生成ツールです。
+
+---
+
+# pigeon
+
+- GitHubの flutter/packages で管理されている安心感
+- [video_player](https://pub.dev/packages/video_player) でも利用されている実績
+- コード生成されるので、人間より間違いが少ない（はず）
+
+---
+
+# 手順
+
+1. インターフェースをDartで書く
+2. `flutter pub run pigeon`を実行
+3. 出力されたinterfaceを、Kotlin/Swiftで実装
+4. Flutter側から、出力されたDart interfaceを実行する
+
+つまり、定義部分を書くのはDartだけで、KotlinとSwiftは実装するだけ。
+
+---
+
+# イメージ
+
+これだけ不要になる。
+
+<img src="/draw/after.drawio.svg" class="h-50">
+
+---
+
+# Dart interface
+
+pigeonへの入力となるコード
+
+```dart
+class BatteryResult {
+  BatteryResult({
+    required this.level,
+    required this.isCharging,
+  });
+
+  final int level;
+  final bool isCharging;
+}
+@HostApi()
+abstract class BatteryApi {
+  Future<BatteryResult> getBatteryLevel() async {
 }
 ```
 
-```ts
-// step 3
-export default {
-  data: () => ({
-    author: {
-      name: 'John Doe',
-      books: [
-        'Vue 2 - Advanced Guide',
-        'Vue 3 - Basic Guide',
-        'Vue 4 - The Mystery'
-      ]
-    }
-  })
-}
+---
+
+# `flutter pub run pigeon`実行
+
+ファイルが出力される
+
+```
+root
+- android
+- ios
+- lib
 ```
 
-Non-code blocks are ignored.
-
-```vue
-<!-- step 4 -->
-<script setup>
-const author = {
-  name: 'John Doe',
-  books: [
-    'Vue 2 - Advanced Guide',
-    'Vue 3 - Basic Guide',
-    'Vue 4 - The Mystery'
-  ]
-}
-</script>
-```
-````
+TODO: あとで書く
 
 ---
 
-# Components
-
-<div grid="~ cols-2 gap-4">
-<div>
-
-You can use Vue components directly inside your slides.
-
-We have provided a few built-in components like `<Tweet/>` and `<Youtube/>` that you can use directly. And adding your custom components is also super easy.
-
-```html
-<Counter :count="10" />
-```
-
-<!-- ./components/Counter.vue -->
-<Counter :count="10" m="t-4" />
-
-Check out [the guides](https://sli.dev/builtin/components.html) for more.
-
-</div>
-<div>
-
-```html
-<Tweet id="1390115482657726468" />
-```
-
-<Tweet id="1390115482657726468" scale="0.65" />
-
-</div>
-</div>
-
-<!--
-Presenter note with **bold**, *italic*, and ~~striked~~ text.
-
-Also, HTML elements are valid:
-<div class="flex w-full">
-  <span style="flex-grow: 1;">Left content</span>
-  <span>Right content</span>
-</div>
--->
-
----
-class: px-20
----
-
-# Themes
-
-Slidev comes with powerful theming support. Themes can provide styles, layouts, components, or even configurations for tools. Switching between themes by just **one edit** in your frontmatter:
-
-<div grid="~ cols-2 gap-2" m="t-2">
-
-```yaml
----
-theme: default
----
-```
-
-```yaml
----
-theme: seriph
----
-```
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-default/01.png?raw=true" alt="">
-
-<img border="rounded" src="https://github.com/slidevjs/themes/blob/main/screenshots/theme-seriph/01.png?raw=true" alt="">
-
-</div>
-
-Read more about [How to use a theme](https://sli.dev/themes/use.html) and
-check out the [Awesome Themes Gallery](https://sli.dev/themes/gallery.html).
+# 出力されるDartコード
 
 ---
 
-# Clicks Animations
-
-You can add `v-click` to elements to add a click animation.
-
-<div v-click>
-
-This shows up when you click the slide:
-
-```html
-<div v-click>This shows up when you click the slide.</div>
-```
-
-</div>
-
-<br>
-
-<v-click>
-
-The <span v-mark.red="3"><code>v-mark</code> directive</span>
-also allows you to add
-<span v-mark.circle.orange="4">inline marks</span>
-, powered by [Rough Notation](https://roughnotation.com/):
-
-```html
-<span v-mark.underline.orange>inline markers</span>
-```
-
-</v-click>
-
-<div mt-20 v-click>
-
-[Learn More](https://sli.dev/guide/animations#click-animation)
-
-</div>
+# 実装するKotlinコード
 
 ---
 
-# Motions
-
-Motion animations are powered by [@vueuse/motion](https://motion.vueuse.org/), triggered by `v-motion` directive.
-
-```html
-<div
-  v-motion
-  :initial="{ x: -80 }"
-  :enter="{ x: 0 }"
-  :click-3="{ x: 80 }"
-  :leave="{ x: 1000 }"
->
-  Slidev
-</div>
-```
-
-<div class="w-60 relative">
-  <div class="relative w-40 h-40">
-    <img
-      v-motion
-      :initial="{ x: 800, y: -100, scale: 1.5, rotate: -50 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-square.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ y: 500, x: -100, scale: 2 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-circle.png"
-      alt=""
-    />
-    <img
-      v-motion
-      :initial="{ x: 600, y: 400, scale: 2, rotate: 100 }"
-      :enter="final"
-      class="absolute inset-0"
-      src="https://sli.dev/logo-triangle.png"
-      alt=""
-    />
-  </div>
-
-  <div
-    class="text-5xl absolute top-14 left-40 text-[#2B90B6] -z-1"
-    v-motion
-    :initial="{ x: -80, opacity: 0}"
-    :enter="{ x: 0, opacity: 1, transition: { delay: 2000, duration: 1000 } }">
-    Slidev
-  </div>
-</div>
-
-<!-- vue script setup scripts can be directly used in markdown, and will only affects current page -->
-<script setup lang="ts">
-const final = {
-  x: 0,
-  y: 0,
-  rotate: 0,
-  scale: 1,
-  transition: {
-    type: 'spring',
-    damping: 10,
-    stiffness: 20,
-    mass: 2
-  }
-}
-</script>
-
-<div
-  v-motion
-  :initial="{ x:35, y: 30, opacity: 0}"
-  :enter="{ y: 0, opacity: 1, transition: { delay: 3500 } }">
-
-[Learn More](https://sli.dev/guide/animations.html#motion)
-
-</div>
+# 実装するSwiftコード
 
 ---
 
-# LaTeX
+# pigeonによって
 
-LaTeX is supported out-of-box. Powered by [KaTeX](https://katex.org/).
-
-<div h-3 />
-
-Inline $\sqrt{3x-1}+(1+x)^2$
-
-Block
-$$ {1|3|all}
-\begin{aligned}
-\nabla \cdot \vec{E} &= \frac{\rho}{\varepsilon_0} \\
-\nabla \cdot \vec{B} &= 0 \\
-\nabla \times \vec{E} &= -\frac{\partial\vec{B}}{\partial t} \\
-\nabla \times \vec{B} &= \mu_0\vec{J} + \mu_0\varepsilon_0\frac{\partial\vec{E}}{\partial t}
-\end{aligned}
-$$
-
-[Learn more](https://sli.dev/features/latex)
-
----
-
-# Diagrams
-
-You can create diagrams / graphs from textual descriptions, directly in your Markdown.
-
-<div class="grid grid-cols-4 gap-5 pt-4 -mb-6">
-
-```mermaid {scale: 0.5, alt: 'A simple sequence diagram'}
-sequenceDiagram
-    Alice->John: Hello John, how are you?
-    Note over Alice,John: A typical interaction
-```
-
-```mermaid {theme: 'neutral', scale: 0.8}
-graph TD
-B[Text] --> C{Decision}
-C -->|One| D[Result 1]
-C -->|Two| E[Result 2]
-```
-
-```mermaid
-mindmap
-  root((mindmap))
-    Origins
-      Long history
-      ::icon(fa fa-book)
-      Popularisation
-        British popular psychology author Tony Buzan
-    Research
-      On effectiveness<br/>and features
-      On Automatic creation
-        Uses
-            Creative techniques
-            Strategic planning
-            Argument mapping
-    Tools
-      Pen and paper
-      Mermaid
-```
-
-```plantuml {scale: 0.7}
-@startuml
-
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
-}
-
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
-
-cloud {
-  [Example 1]
-}
-
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
-
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
-
-@enduml
-```
-
-</div>
-
-Learn More: [Mermaid Diagrams](https://sli.dev/guide/features/mermaid) and [PlantUML Diagrams](https://sli.dev/guide/features/plantuml)
-
----
-foo: bar
-dragPos:
-  square: 586,107,167,_,-16
----
-
-# Draggable Elements
-
-Double-click on the draggable elements to edit their positions.
-
-<br>
-
-###### Directive Usage
-
-```md
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-```
-
-<br>
-
-###### Component Usage
-
-```md
-<v-drag text-3xl>
-  <carbon:arrow-up />
-  Use the `v-drag` component to have a draggable container!
-</v-drag>
-```
-
-<v-drag pos="558,291,261,_,-15">
-  <div text-center text-3xl border border-main rounded>
-    Double-click me!
-  </div>
-</v-drag>
-
-<img v-drag="'square'" src="https://sli.dev/logo.png">
-
-###### Draggable Arrow
-
-```md
-<v-drag-arrow two-way />
-```
-
-<v-drag-arrow pos="365,444,232,12" two-way op70 />
-
----
-src: ./pages/imported-slides.md
-hide: false
----
-
----
-
-# Monaco Editor
-
-Slidev provides built-in Monaco Editor support.
-
-Add `{monaco}` to the code block to turn it into an editor:
-
-```ts {monaco}
-import { ref } from 'vue'
-import { emptyArray } from './external'
-
-const arr = ref(emptyArray(10))
-```
-
-Use `{monaco-run}` to create an editor that can execute the code directly in the slide:
-
-```ts {monaco-run}
-import { version } from 'vue'
-import { emptyArray, sayHello } from './external'
-
-sayHello()
-console.log(`vue ${version}`)
-console.log(emptyArray<number>(10).reduce(fib => [...fib, fib.at(-1)! + fib.at(-2)!], [1, 1]))
-```
-
----
-layout: center
-class: text-center
----
-
-# Learn More
-
-[Documentation](https://sli.dev) · [GitHub](https://github.com/slidevjs/slidev) · [Showcases](https://sli.dev/showcases.html)
-
-<PoweredBySlidev mt-10 />
+- 面倒・ミスしやすい、各言語で同じようなコードを書く部分が1箇所で良くなった
+- 変更が必要な場合も、1箇所変更してコマンド実行すると、必要なコードが手に入る
+- 最悪、pigeonが廃れても、生成された結果コードは残っているので、頑張れば修正できる

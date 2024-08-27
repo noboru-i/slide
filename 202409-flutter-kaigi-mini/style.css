@@ -1,0 +1,13 @@
+:root {
+    --slidev-code-font-size: 10px; 
+    --slidev-code-line-height: 1.2;
+}
+
+.slidev-layout {
+    background-color: #FFFFFF;
+    color: #535353;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}

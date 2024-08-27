@@ -282,7 +282,7 @@ class BatteryResult {
 }
 @HostApi()
 abstract class BatteryApi {
-  Future<BatteryResult> getBatteryLevel() async {
+  Future<BatteryResult> getBatteryLevel();
 }
 ```
 

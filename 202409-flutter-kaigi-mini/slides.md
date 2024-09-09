@@ -253,7 +253,7 @@ https://github.com/flutter/packages/tree/main/packages/pigeon
 # pigeonを使う手順
 
 1. インターフェースをDartで書く
-2. `flutter pub run pigeon`を実行（コードが自動生成される）
+2. `dart run pigeon`を実行（コードが自動生成される）
 3. 出力されたinterfaceを、Kotlin/Swiftで実装
 4. Flutter側から、出力されたDart interfaceを実行する
 
@@ -285,13 +285,13 @@ class BatteryResult {
 }
 @HostApi()
 abstract class BatteryApi {
-  Future<BatteryResult> getBatteryLevel();
+  BatteryResult getBatteryLevel();
 }
 ```
 
 ---
 
-# `flutter pub run pigeon`実行
+# `dart run pigeon`実行
 
 ファイルが出力される
 

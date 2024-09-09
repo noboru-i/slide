@@ -47,7 +47,7 @@ layout: two-cols
 ---
 
 Flutterでアプリを開発してても、<br>
-platform-specific codeを実行したいことありますよね？
+platform-specific codeを実行したいことが、まれによくありますよね？
 
 <div class="text-xs text-slate-400">
 ※ platform-specific code<br>
@@ -66,10 +66,10 @@ https://docs.flutter.dev/platform-integration/platform-channels
 
 # 例えば
 
-- 別プロジェクトでネイティブで作り込んだものの流用
+- 過去にネイティブで作り込んだものを流用したい
 - 広告系SDKの導入
 - 機器の操作系（IoTデバイスSDKとかプリンターSDKとか）
-- ニッチなライブラリ（MIDI再生とか）
+- ニッチなライブラリを利用したい（MIDI再生とか）
 
 ---
 
@@ -100,9 +100,10 @@ ref: https://docs.flutter.dev/platform-integration/platform-channels
 
 上記の公式ドキュメントでは、パラメータ無しで実行、数値型が返ってくるだけ。
 
-現実的には、複数の値の送受信が必要となる。
+これだけなら、ある程度簡単そうだが、
+現実的には複数の値の送受信が必要となる。
 
-今回は例として、電池残量（int）と充電中かどうか（bool）を返す。
+今回は例として、電池残量（int）と、充電中かどうか（bool）を返す。
 
 ---
 
@@ -152,29 +153,30 @@ struct BatteryResult: Codable {
 
 ---
 
-# Interface (1/3)
+# Interface / Implementation (1/3)
 
 Flutter (Dart)
 
-ネイティブコードを実行した結果をJSON文字列で受信して、クラスに変換する。
+invokeMethodでネイティブコードを実行した結果を、JSON文字列で受け取ってクラスに変換する。
 
 ```dart
 class BatteryApi {
   static const platform = MethodChannel('samples.flutter.dev/battery');
   Future<BatteryResult> getBatteryLevel() async {
+    // ex. {"level": 89, "isCharging": true}
     final resultJson = await platform.invokeMethod<String>('getBatteryLevel');
     return BatteryResult.fromJson(jsonDecode(resultJson));
   }
 }
 ```
 
-必要なところでインスタンス化して、getBatteryLevelを呼び出す
-
 ---
 
-# Interface (2/3)
+# Interface / Implementation (2/3)
 
 Android (Kotlin)
+
+同じchannel文字列で、同じmethod名であれば、処理して返す。
 
 ```kotlin
 private val CHANNEL = "samples.flutter.dev/battery"
@@ -193,7 +195,7 @@ MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCall
 
 ---
 
-# Interface (3/3)
+# Interface / Implementation (3/3)
 
 iOS (Swift)
 
@@ -221,7 +223,7 @@ batteryChannel.setMethodCallHandler({
     - 追加・削除・更新したい場合に手間
     - typoする危険性
     - 型を間違える危険性
-- 関数名がただの文字列
+- チャンネル名と関数名がただの文字列
     - typoする危険性
     - リファクタリングしづらい
 
@@ -235,22 +237,23 @@ https://pub.dev/packages/pigeon
 
 Google翻訳
 
-> Pigeon は、Flutter とホスト プラットフォーム間の通信をタイプセーフ、簡単、高速にするコード生成ツールです。
+> Pigeon は、Flutter とホスト プラットフォーム間の通信を **タイプセーフ** 、 **簡単** 、 **高速** にするコード生成ツールです。
 
 ---
 
 # pigeon
 
 - GitHubの flutter/packages で管理されている安心感
+https://github.com/flutter/packages/tree/main/packages/pigeon
 - [video_player](https://pub.dev/packages/video_player) でも利用されている実績
-- コード生成されるので、人間より間違いが少ない（はず）
+- コード自動生成なので、人間より間違いが少ないはず
 
 ---
 
-# 手順
+# pigeonを使う手順
 
 1. インターフェースをDartで書く
-2. `flutter pub run pigeon`を実行
+2. `flutter pub run pigeon`を実行（コードが自動生成される）
 3. 出力されたinterfaceを、Kotlin/Swiftで実装
 4. Flutter側から、出力されたDart interfaceを実行する
 
@@ -292,31 +295,96 @@ abstract class BatteryApi {
 
 ファイルが出力される
 
+```bash
+dart run pigeon \
+  --input pigeons/messages.dart \
+  --dart_out lib/gen/messages.dart \
+  --swift_out ios/Classes/messages.g.swift \
+  --kotlin_out android/app/src/main/kotlin/com/example/pigeon_plugin/Messages.g.kt \
+  --kotlin_package "com.example.pigeon_plugin"
 ```
-root
-- android
-- ios
-- lib
-```
-
-TODO: あとで書く
 
 ---
 
-# 出力されるDartコード
+# 以降、Flutterアプリプロジェクトに直接組み込む例
+
+（個人的には、 `packages` ディレクトリを作成して、利用するライブラリごとなどにフォルダを作成し、plugin packageとすることが多いです。）
+
+
+<div class="text-xs text-slate-400 mt-18">
+今回のサンプルコードはこちらにあります。<br>
+https://github.com/noboru-i/flutter_pigeon_sample
+</div>
 
 ---
 
 # 実装するKotlinコード
 
+```kotlin
+class MainActivity : FlutterActivity() {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
+        super.configureFlutterEngine(flutterEngine)
+        BatteryApi.setUp(
+            flutterEngine.dartExecutor.binaryMessenger,
+            BatteryApiImplementation(context)
+        )
+    }
+}
+class BatteryApiImplementation(private val context: Context) : BatteryApi {
+    override fun getBatteryLevel(): BatteryResult {
+        val level: Int = ...
+        val isCharging: Boolean = ...
+        return BatteryResult(level, isCharging)
+    }
+}
+```
+
 ---
 
 # 実装するSwiftコード
+
+```swift
+@UIApplicationMain
+@objc class AppDelegate: FlutterAppDelegate {
+    override func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        GeneratedPluginRegistrant.register(with: self)
+        let controller: FlutterViewController = window?.rootViewController as! FlutterViewController
+        BatteryApiSetup.setUp(binaryMessenger: controller as! FlutterBinaryMessenger, api: BatteryApiImplementation())
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+}
+class BatteryApiImplementation: BatteryApi {
+    func getBatteryLevel() throws -> BatteryResult {
+        let level = ...
+        let isCharging = ...
+        return BatteryResult(level: Int64(level), isCharging: isCharging)
+    }
+}
+```
+
+---
+
+## こうなった
+
+<img src="/draw/after.drawio.svg" class="h-50"> 
 
 ---
 
 # pigeonによって
 
-- 面倒・ミスしやすい、各言語で同じようなコードを書く部分が1箇所で良くなった
-- 変更が必要な場合も、1箇所変更してコマンド実行すると、必要なコードが手に入る
-- 最悪、pigeonが廃れても、生成された結果コードは残っているので、頑張れば修正できる
+- 各言語で同じようなコードを書くという、面倒・ミスしやすい部分が、1箇所書くだけで良くなった
+- 今後更新・追加が必要な場合も、Dartでの定義だけ書き換えてコマンド実行すると、必要なコードが手に入る
+- （最悪、pigeonが廃れても、生成された結果コードは残っているので、頑張れば修正できる）
+
+---
+layout: center
+---
+
+# pigeonを使って、<br>ラクできるところは<br>ラクしましょう
+
+<div class="absolute right-30px bottom-30px">
+おわり
+</div>

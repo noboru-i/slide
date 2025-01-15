@@ -1,0 +1,17 @@
+{
+  "name": "202501-kzrb",
+  "private": true,
+  "scripts": {
+    "build": "slidev build --base /slide/202409-flutter-kaigi-mini/dist",
+    "dev": "slidev --open",
+    "export": "slidev export"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.49.24",
+    "@slidev/theme-seriph": "^0.25.0",
+    "vue": "^3.4.33"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.48.0"
+  }
+}

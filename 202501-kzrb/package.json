@@ -1,8 +1,9 @@
 {
   "name": "202501-kzrb",
+  "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build --base /slide/202501-kzrb/dist",
+    "build": "slidev build --base /slide/202501-kzrb/dist/",
     "dev": "slidev --open",
     "export": "slidev export"
   },

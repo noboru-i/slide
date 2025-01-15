@@ -40,7 +40,7 @@ htmlAttrs:
 ---
 layout: image-right
 
-image: ./images/a1mini.jpg
+image: /images/a1mini.jpg
 ---
 去年の10月末に3Dプリンターが届いて、3ヶ月ほど経過しました。
 
@@ -52,7 +52,7 @@ image: ./images/a1mini.jpg
 ---
 layout: image-right
 
-image: ./images/from_makerworld.jpg
+image: /images/from_makerworld.jpg
 ---
 MakerWorldで共有されているデータを印刷したりしてます。
 
@@ -92,7 +92,7 @@ model();
 ---
 layout: image-right
 
-image: ./images/code_stl_mono.drawio.svg
+image: /images/code_stl_mono.drawio.svg
 ---
 "コードで管理" することの利点は、日常的に経験してると思います。
 
@@ -105,7 +105,7 @@ image: ./images/code_stl_mono.drawio.svg
 ---
 layout: image-right
 
-image: ./images/created.drawio.png
+image: /images/created.drawio.png
 ---
 OpenSCADで作ったものをいくつか紹介
 
@@ -117,7 +117,7 @@ OpenSCADで作ったものをいくつか紹介
 ---
 layout: image-right
 
-image: ./images/develop_desktop.png
+image: /images/develop_desktop.png
 ---
 
 ## どうやってコードを書いているか
@@ -131,7 +131,7 @@ Hot reload的に、すぐに確認できる
 ---
 layout: image-right
 
-image: ./images/double_ring_1.drawio.png
+image: /images/double_ring_1.drawio.png
 ---
 
 ## 具体例：<br>double ring stand の作り方
@@ -141,7 +141,7 @@ image: ./images/double_ring_1.drawio.png
 ---
 layout: image-right
 
-image: ./images/double_ring_2.drawio.png
+image: /images/double_ring_2.drawio.png
 ---
 
 変数宣言
@@ -161,7 +161,7 @@ stand_height = 4; // [0.5:0.1:5]
 ---
 layout: image-right
 
-image: ./images/double_ring_3.drawio.png
+image: /images/double_ring_3.drawio.png
 ---
 
 円錐を描画
@@ -182,7 +182,7 @@ model();
 ---
 layout: image-right
 
-image: ./images/double_ring_4.drawio.png
+image: /images/double_ring_4.drawio.png
 ---
 
 円錐２を描画
@@ -207,7 +207,7 @@ model();
 ---
 layout: image-right
 
-image: ./images/double_ring_5.drawio.png
+image: /images/double_ring_5.drawio.png
 ---
 
 土台を追加
@@ -235,7 +235,7 @@ model();
 ---
 layout: image-right
 
-image: ./images/double_ring_6.drawio.png
+image: /images/double_ring_6.drawio.png
 ---
 
 土台の間を連結→出来上がり
@@ -271,7 +271,7 @@ model();
 
 # MakerLabのParametric Model Maker
 
-<img src="./images/ParametricModelMaker.png">
+<img src="/images/ParametricModelMaker.png">
 
 ---
 
